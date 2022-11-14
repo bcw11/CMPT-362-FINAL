@@ -7,7 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.G3.kalendar.database.User
+import com.G3.kalendar.database.UserDao
+import com.G3.kalendar.database.UserRepository
 import com.G3.kalendar.databinding.FragmentGalleryBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class GalleryFragment : Fragment() {
 
