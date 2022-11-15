@@ -9,7 +9,9 @@
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_calendar_cell.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/fragment_child.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/fragment_kanban.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.11548913043478261" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.2" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>

@@ -16,6 +16,8 @@ import java.util.*
 
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+    public val label = "Calendar"
+
     private val dayofWeek = arrayOf(R.id.sunday_text,R.id.monday_text,R.id.tuesday_text, R.id.wednesday_text,
                                     R.id.thursday_text,R.id.friday_text,R.id.saturday_text)
     private val dayOfMonth = arrayOf(R.id.sunday_num,R.id.monday_num,R.id.tuesday_num, R.id.wednesday_num,
@@ -51,7 +53,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
             // current day's colour to BLUE
             if(c.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)){
-                println("debug ${c.get(Calendar.DAY_OF_MONTH) }")
                 dayOfMonthTV.setTextColor(Color.BLUE)
                 dayOfWeekTV.setTextColor(Color.BLUE)
             }
@@ -61,6 +62,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         }
     }
 
+    // getting correct month and setting it in view
     private fun setMonthText(view: View){
         monthText = view.findViewById(R.id.month_text)
         val month = SimpleDateFormat("MMMM").format(calendar.time)
@@ -95,6 +97,5 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         val listviewAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireActivity(), android.R.layout
             .simple_list_item_1, listviewArray)
         listview.adapter = listviewAdapter
-
     }
 }

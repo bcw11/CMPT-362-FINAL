@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.databinding.FragmentKanbanBinding
 
 class KanbanFragment : Fragment() {
+    public val label = "Kanban"
 
     private var _binding: FragmentKanbanBinding? = null
 
