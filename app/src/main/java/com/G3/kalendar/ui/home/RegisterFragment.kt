@@ -41,17 +41,23 @@ class RegisterFragment: Fragment() {
 
         _binding!!.btnRegister.setOnClickListener{
             if(_binding!!.etName.text.isNotEmpty() && _binding!!.etEmail.text.isNotEmpty()
-                && _binding!!.etPassword.text == _binding!!.etRepassword.text){
+                && _binding!!.etPassword.text.toString() == _binding!!.etRepassword.text.toString()){
 
                     //save in sharedpreferences for now...
 
-
+                    editor.putString("Name", _binding!!.etName.text.toString())
+                    editor.putString("Email",_binding!!.etEmail.text.toString())
+                    editor.putString("Password",_binding!!.etPassword.text.toString())
+                    editor.commit()
+                val toast = Toast.makeText(context, "Account creation successful", Toast.LENGTH_LONG)
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     _binding!!.FragmentRegister.removeAllViews()
                     transaction.replace(R.id.FragmentRegister, HomeFragment())
                     transaction.commit()
+
+
                  }
-            else if(_binding!!.etPassword.text != _binding!!.etRepassword){
+            else if(_binding!!.etPassword.text.toString() != _binding!!.etRepassword.text.toString()){
                 val toast = Toast.makeText(context, "Passwords do not match!", Toast.LENGTH_LONG)
                 toast.show()
             }

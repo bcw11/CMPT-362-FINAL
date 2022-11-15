@@ -28,6 +28,7 @@
 
     <EditText
         android:id="@+id/et_email"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="email"
@@ -40,6 +41,7 @@
 
     <EditText
         android:id="@+id/et_password"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="password"

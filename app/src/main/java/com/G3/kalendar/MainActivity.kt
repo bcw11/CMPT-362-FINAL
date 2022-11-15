@@ -1,8 +1,11 @@
 package com.G3.kalendar
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -73,7 +76,6 @@ class MainActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,4 +88,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
 }
