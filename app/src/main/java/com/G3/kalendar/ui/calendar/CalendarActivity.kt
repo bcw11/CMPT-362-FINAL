@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 
-class Calendar(context: Context): View(context) {
+class CalendarActivity(context: Context): View(context) {
 
     private lateinit var bitmap: Bitmap
     private lateinit var canvas: Canvas
@@ -18,9 +18,6 @@ class Calendar(context: Context): View(context) {
 
         bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888)
         canvas = Canvas(bitmap)
-
-
-
     }
 
 }

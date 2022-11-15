@@ -18,6 +18,8 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    public val label = "Home"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

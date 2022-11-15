@@ -10,4 +10,10 @@ class CalendarViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply { value = "This is calendar Fragment" }
     val text: LiveData<String> = _text
 
+//     calendar
+//    val calendar: Calendar = Calendar(binding)
+
+
+//        requireActivity().setContentView(calendar)
+
 }

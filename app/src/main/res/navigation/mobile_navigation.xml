@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_kanban"
         android:name="com.G3.kalendar.ui.kanban.KanbanFragment"
         android:label="@string/menu_kanban"
         tools:layout="@layout/fragment_kanban" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_calendar"
         android:name="com.G3.kalendar.ui.calendar.CalendarFragment"
         android:label="@string/menu_calendar"
         tools:layout="@layout/fragment_calendar" />
