@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.G3.kalendar.R
 import com.G3.kalendar.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -27,11 +28,14 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        _binding!!.btnRegister.setOnClickListener{
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            _binding!!.FragmentHome.removeAllViews()
+            transaction.replace(R.id.FragmentHome, RegisterFragment())
+            transaction.commit()
         }
+
+
         return root
     }
 
