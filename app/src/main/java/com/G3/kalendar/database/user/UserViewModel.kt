@@ -1,4 +1,4 @@
-package com.G3.kalendar.database
+package com.G3.kalendar.database.user
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch

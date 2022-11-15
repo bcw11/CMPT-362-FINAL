@@ -1,4 +1,4 @@
-package com.G3.kalendar.database
+package com.G3.kalendar.database.user
 
 import android.os.Parcelable
 import android.util.Log
@@ -20,7 +20,7 @@ data class User(
                 val name = getString("name")!!
                 val email = getString("email")!!
                 val password = getString("password")!!
-                var salt = getString("salt")!!
+                val salt = getString("salt")!!
                 User(id, name, email, password, salt)
             } catch (e: Exception) {
                 Log.e(TAG, "Error converting user profile", e)

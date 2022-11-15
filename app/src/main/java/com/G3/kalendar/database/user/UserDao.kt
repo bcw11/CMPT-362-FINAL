@@ -1,7 +1,7 @@
-package com.G3.kalendar.database
+package com.G3.kalendar.database.user
 
 import android.util.Log
-import com.G3.kalendar.database.User.Companion.toUser
+import com.G3.kalendar.database.user.User.Companion.toUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
