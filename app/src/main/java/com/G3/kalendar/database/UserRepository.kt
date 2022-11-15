@@ -7,6 +7,12 @@ import kotlinx.coroutines.runBlocking
 
 class UserRepository(private val dao: UserDao) {
 
+    fun authenticate(email: String, password: String): User? {
+        return runBlocking {
+            dao.authenticate(email, password)
+        }
+    }
+
     fun getUser(id: String): User? {
         return runBlocking {
             dao.getUser(id)

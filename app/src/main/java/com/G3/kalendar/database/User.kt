@@ -11,7 +11,8 @@ data class User(
     var id: String = "",
     var name: String = "",
     var email: String = "",
-    var password: String = ""
+    var password: String = "",
+    var salt: String = ""
 ) : Parcelable {
     companion object {
         fun DocumentSnapshot.toUser(): User? {
@@ -19,13 +20,14 @@ data class User(
                 val name = getString("name")!!
                 val email = getString("email")!!
                 val password = getString("password")!!
-                User(id, name, email, password)
+                var salt = getString("salt")!!
+                User(id, name, email, password, salt)
             } catch (e: Exception) {
                 Log.e(TAG, "Error converting user profile", e)
                 null
             }
         }
 
-        private const val TAG = "User"
+        private val TAG: String = User::class.java.simpleName
     }
 }
