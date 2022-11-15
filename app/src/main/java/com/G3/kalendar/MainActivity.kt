@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
@@ -55,18 +56,20 @@ class MainActivity : AppCompatActivity() {
 //        if(currentLabel == HomeFragment().label){ binding.appBarMain.fab.visibility = View.GONE }
 //        else{ binding.appBarMain.fab.visibility = View.VISIBLE }
 
-        // adapted from https://stackoverflow.com/questions/50689206/how-i-can-retrieve-current-fragment-in-navhostfragment
-        // and https://stackoverflow.com/questions/67147901/kotlin-opening-new-fragment-in-nav-drawer-example
+        // adapted from https://stackoverflow.com/questions/67147901/kotlin-opening-new-fragment-in-nav-drawer-example
+        // switching icons https://stackoverflow.com/questions/15052669/android-change-button-icon-when-clicked
         // switches between calendar and kanban fragments
         binding.appBarMain.fab.setOnClickListener {
             currentLabel = navController.currentDestination?.label
             // finding current fragment
-            if(currentLabel == CalendarFragment().label){
-                navController.navigate(R.id.nav_kanban)
-            }
-            if(currentLabel == KanbanFragment().label){
-                navController.navigate(R.id.nav_calendar)
-            }
+//            if(currentLabel == CalendarFragment().label){
+////                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
+//                navController.navigate(R.id.nav_kanban)
+//            }
+//            if(currentLabel == KanbanFragment().label){
+////                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
+//                navController.navigate(R.id.nav_calendar)
+//            }
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 
