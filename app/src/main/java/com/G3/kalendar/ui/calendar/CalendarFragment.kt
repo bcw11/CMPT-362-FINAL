@@ -44,6 +44,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         val monthDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1
         c.add(Calendar.DAY_OF_YEAR, -monthDay)
         calendar.get(Calendar.DAY_OF_MONTH)
+
         // updating day of month text views
         for(i in dayOfMonth.indices){
             val dayOfMonthTV: TextView = view.findViewById(dayOfMonth[i])

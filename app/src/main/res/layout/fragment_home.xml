@@ -54,7 +54,7 @@
         android:textSize="15sp" />
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
@@ -62,17 +62,19 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
-        android:text="Create Account"/>
+        android:text="login"/>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_register"
+        android:layout_below="@id/btn_login"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
-        android:text="login"/>
+        android:text="Create Account"/>
+
+
 
 </RelativeLayout>
