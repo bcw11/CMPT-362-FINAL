@@ -3,6 +3,8 @@ package com.G3.kalendar.database.epic
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class EpicViewModel(
     private val epicRepository: EpicRepository,
@@ -17,7 +19,9 @@ class EpicViewModel(
     }
 
     fun getAllById() {
-        _epics.value = epicRepository.getAllByUserId(userId)
+        viewModelScope.launch {
+            _epics.value = epicRepository.getAllByUserId(userId)
+        }
     }
 
 }

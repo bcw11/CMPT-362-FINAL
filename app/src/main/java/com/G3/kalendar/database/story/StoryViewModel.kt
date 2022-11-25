@@ -1,9 +1,9 @@
 package com.G3.kalendar.database.story
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 class StoryViewModel(private val repository: StoryRepository, private val userId: String) : ViewModel() {
     private val _stories = MutableLiveData<List<Story>>()
@@ -15,10 +15,14 @@ class StoryViewModel(private val repository: StoryRepository, private val userId
     }
 
     fun getAllById() {
-        _stories.value = repository.getAllByUserId(userId)
+        viewModelScope.launch {
+            _stories.value = repository.getAllByUserId(userId)
+        }
     }
 
     fun getAllByEpicId(epicId: String) {
-        _stories.value = repository.getAllByEpicId(userId, epicId)
+        viewModelScope.launch {
+            _stories.value = repository.getAllByEpicId(userId, epicId)
+        }
     }
 }
