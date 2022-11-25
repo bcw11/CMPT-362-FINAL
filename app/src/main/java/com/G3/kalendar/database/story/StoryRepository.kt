@@ -7,15 +7,15 @@ import kotlinx.coroutines.runBlocking
 
 class StoryRepository(private val dao: StoryDao) {
 
-    fun getAllById(userId: String): List<Story> {
+    fun getAllByUserId(userId: String): List<Story> {
         return runBlocking {
-            dao.getAllById(userId)
+            dao.getAllByUserId(userId)
         }
     }
 
-    fun getAll(): List<Story> {
+    fun getAllByEpicId(userId: String, epicId: String): List<Story> {
         return runBlocking {
-            dao.getAll()
+            dao.getAllByEpicId(userId, epicId)
         }
     }
 

@@ -8,26 +8,28 @@ import kotlinx.coroutines.tasks.await
 
 class StoryDao(private val db: FirebaseFirestore) {
 
-    private val TAG: String = UserDao::class.java.simpleName
+    private val TAG: String = StoryDao::class.java.simpleName
+    private val TABLE_NAME = "stories"
 
     suspend fun insert(story: Story) {
         val entry = hashMapOf(
             "userId" to story.userId,
-            "title" to story.title,
-            "description" to story.description,
-            "timeStart" to story.timeStart,
-            "timeEnd" to story.timeEnd
+            "epicId" to story.epicId,
+            "name" to story.name,
+            "dueDate" to story.dueDate,
+            "status" to story.status,
+            "calendarTimes" to story.calendarTimes
         )
 
-        db.collection("stories")
+        db.collection(TABLE_NAME)
             .add(entry)
             .await()
     }
 
-    suspend fun getAllById(userId: String): List<Story> {
+    suspend fun getAllByUserId(userId: String): List<Story> {
         val stories = ArrayList<Story>()
         try {
-            val query = db.collection("stories")
+            val query = db.collection(TABLE_NAME)
                 .whereEqualTo("userId", userId)
                 .get()
                 .await()
@@ -41,13 +43,21 @@ class StoryDao(private val db: FirebaseFirestore) {
         return stories
     }
 
-    suspend fun getAll(): List<Story> {
-        return try {
-            db.collection("stories").get().await()
-                .documents.mapNotNull { it.toStory() }
+    suspend fun getAllByEpicId(userId: String, epicId: String): List<Story> {
+        val stories = ArrayList<Story>()
+        try {
+            val query = db.collection(TABLE_NAME)
+                .whereEqualTo("userId", userId)
+                .whereEqualTo("epicId", epicId)
+                .get()
+                .await()
+
+            for (document in query.documents) {
+                document.toStory()?.let { stories.add(it) }
+            }
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting all users", e)
-            emptyList()
+            Log.e(TAG, "Error getting matching stories", e)
         }
+        return stories
     }
 }
