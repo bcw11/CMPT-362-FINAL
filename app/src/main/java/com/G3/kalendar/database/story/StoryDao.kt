@@ -3,7 +3,7 @@ package com.G3.kalendar.database.story
 import android.util.Log
 import com.G3.kalendar.Globals
 import com.G3.kalendar.database.story.Story.Companion.toStory
-import com.G3.kalendar.database.user.UserDao
+import com.G3.kalendar.database.task.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -23,6 +23,34 @@ class StoryDao(private val db: FirebaseFirestore) {
 
         db.collection(Globals.STORY_TABLE_NAME)
             .add(entry)
+            .await()
+    }
+
+    suspend fun insertWithTasks(story: Story, taskList: ArrayList<Task>) {
+        val storyEntry = hashMapOf(
+            Globals.USER_ID_FIELD to story.userId,
+            Globals.EPIC_ID_FIELD to story.epicId,
+            Globals.NAME_FIELD to story.name,
+            Globals.DUE_DATE_FIELD to story.dueDate,
+            Globals.STATUS_FIELD to story.status,
+            Globals.CALENDAR_TIMES_FIELD to story.calendarTimes
+        )
+
+        db.collection(Globals.STORY_TABLE_NAME)
+            .add(storyEntry)
+            .addOnSuccessListener {
+                for (task in taskList) {
+                    task.storyId = it.id
+                    val taskEntry = hashMapOf(
+                        Globals.USER_ID_FIELD to task.userId,
+                        Globals.STORY_ID_FIELD to task.storyId,
+                        Globals.NAME_FIELD to task.name,
+                        Globals.STATUS_FIELD to task.status
+                    )
+                    db.collection(Globals.TASK_TABLE_NAME)
+                        .add(taskEntry)
+                }
+            }
             .await()
     }
 

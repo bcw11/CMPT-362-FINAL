@@ -1,5 +1,6 @@
 package com.G3.kalendar.database.story
 
+import com.G3.kalendar.database.task.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -22,6 +23,12 @@ class StoryRepository(private val dao: StoryDao) {
     fun insert(story: Story) {
         CoroutineScope(IO).launch {
             dao.insert(story)
+        }
+    }
+
+    fun insertWithTasks(story: Story, taskList: ArrayList<Task>) {
+        CoroutineScope(IO).launch {
+            dao.insertWithTasks(story, taskList)
         }
     }
 }
