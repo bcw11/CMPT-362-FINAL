@@ -1,6 +1,7 @@
 package com.G3.kalendar.database.story
 
 import android.util.Log
+import com.G3.kalendar.Globals
 import com.G3.kalendar.database.story.Story.Companion.toStory
 import com.G3.kalendar.database.user.UserDao
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,7 +10,6 @@ import kotlinx.coroutines.tasks.await
 class StoryDao(private val db: FirebaseFirestore) {
 
     private val TAG: String = StoryDao::class.java.simpleName
-    private val TABLE_NAME = "stories"
 
     suspend fun insert(story: Story) {
         val entry = hashMapOf(
@@ -21,7 +21,7 @@ class StoryDao(private val db: FirebaseFirestore) {
             "calendarTimes" to story.calendarTimes
         )
 
-        db.collection(TABLE_NAME)
+        db.collection(Globals.STORY_TABLE_NAME)
             .add(entry)
             .await()
     }
@@ -29,7 +29,7 @@ class StoryDao(private val db: FirebaseFirestore) {
     suspend fun getAllByUserId(userId: String): List<Story> {
         val stories = ArrayList<Story>()
         try {
-            val query = db.collection(TABLE_NAME)
+            val query = db.collection(Globals.STORY_TABLE_NAME)
                 .whereEqualTo("userId", userId)
                 .get()
                 .await()
@@ -46,7 +46,7 @@ class StoryDao(private val db: FirebaseFirestore) {
     suspend fun getAllByEpicId(userId: String, epicId: String): List<Story> {
         val stories = ArrayList<Story>()
         try {
-            val query = db.collection(TABLE_NAME)
+            val query = db.collection(Globals.STORY_TABLE_NAME)
                 .whereEqualTo("userId", userId)
                 .whereEqualTo("epicId", epicId)
                 .get()

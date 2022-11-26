@@ -1,6 +1,7 @@
 package com.G3.kalendar.database.epic
 
 import android.util.Log
+import com.G3.kalendar.Globals
 import com.G3.kalendar.database.epic.Epic.Companion.toEpic
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -8,7 +9,6 @@ import kotlinx.coroutines.tasks.await
 class EpicDao(private val db: FirebaseFirestore) {
 
     private val TAG: String = EpicDao::class.java.simpleName
-    private val TABLE_NAME = "epics"
 
     suspend fun insert(epic: Epic) {
         val entry = hashMapOf(
@@ -16,7 +16,7 @@ class EpicDao(private val db: FirebaseFirestore) {
             "title" to epic.title
         )
 
-        db.collection(TABLE_NAME)
+        db.collection(Globals.EPIC_TABLE_NAME)
             .add(entry)
             .await()
     }
@@ -24,7 +24,7 @@ class EpicDao(private val db: FirebaseFirestore) {
     suspend fun getAllByUserId(userId: String): List<Epic> {
         val epics = ArrayList<Epic>()
         try {
-            val query = db.collection(TABLE_NAME)
+            val query = db.collection(Globals.EPIC_TABLE_NAME)
                 .whereEqualTo("userId", userId)
                 .get()
                 .await()
