@@ -2,6 +2,7 @@ package com.G3.kalendar.database.story
 
 import android.os.Parcelable
 import android.util.Log
+import com.G3.kalendar.Globals
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.parcelize.Parcelize
 
@@ -18,12 +19,12 @@ data class Story(
     companion object {
         fun DocumentSnapshot.toStory(): Story? {
             return try {
-                val userId = getString("userId")!!
-                val epicId = getString("epicId")!!
-                val name = getString("name")!!
-                val dueDate = getLong("dueDate")!!
-                val status = getString("status")!!
-                val calendarTimes = data!!["calendarTimes"]!! as List<Long>
+                val userId = getString(Globals.USER_ID_FIELD)!!
+                val epicId = getString(Globals.EPIC_ID_FIELD)!!
+                val name = getString(Globals.NAME_FIELD)!!
+                val dueDate = getLong(Globals.DUE_DATE_FIELD)!!
+                val status = getString(Globals.STATUS_FIELD)!!
+                val calendarTimes = data!![Globals.CALENDAR_TIMES_FIELD]!! as List<Long>
 
                 Story(id, userId, epicId, name, dueDate, status, calendarTimes)
             } catch (e: Exception) {

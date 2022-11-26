@@ -12,8 +12,8 @@ class EpicDao(private val db: FirebaseFirestore) {
 
     suspend fun insert(epic: Epic) {
         val entry = hashMapOf(
-            "userId" to epic.userId,
-            "title" to epic.title
+            Globals.USER_ID_FIELD to epic.userId,
+            Globals.TITLE_FIELD to epic.title
         )
 
         db.collection(Globals.EPIC_TABLE_NAME)
@@ -25,7 +25,7 @@ class EpicDao(private val db: FirebaseFirestore) {
         val epics = ArrayList<Epic>()
         try {
             val query = db.collection(Globals.EPIC_TABLE_NAME)
-                .whereEqualTo("userId", userId)
+                .whereEqualTo(Globals.USER_ID_FIELD, userId)
                 .get()
                 .await()
 

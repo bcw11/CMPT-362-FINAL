@@ -13,12 +13,12 @@ class StoryDao(private val db: FirebaseFirestore) {
 
     suspend fun insert(story: Story) {
         val entry = hashMapOf(
-            "userId" to story.userId,
-            "epicId" to story.epicId,
-            "name" to story.name,
-            "dueDate" to story.dueDate,
-            "status" to story.status,
-            "calendarTimes" to story.calendarTimes
+            Globals.USER_ID_FIELD to story.userId,
+            Globals.EPIC_ID_FIELD to story.epicId,
+            Globals.NAME_FIELD to story.name,
+            Globals.DUE_DATE_FIELD to story.dueDate,
+            Globals.STATUS_FIELD to story.status,
+            Globals.CALENDAR_TIMES_FIELD to story.calendarTimes
         )
 
         db.collection(Globals.STORY_TABLE_NAME)
@@ -30,7 +30,7 @@ class StoryDao(private val db: FirebaseFirestore) {
         val stories = ArrayList<Story>()
         try {
             val query = db.collection(Globals.STORY_TABLE_NAME)
-                .whereEqualTo("userId", userId)
+                .whereEqualTo(Globals.USER_ID_FIELD, userId)
                 .get()
                 .await()
 
@@ -47,8 +47,8 @@ class StoryDao(private val db: FirebaseFirestore) {
         val stories = ArrayList<Story>()
         try {
             val query = db.collection(Globals.STORY_TABLE_NAME)
-                .whereEqualTo("userId", userId)
-                .whereEqualTo("epicId", epicId)
+                .whereEqualTo(Globals.USER_ID_FIELD, userId)
+                .whereEqualTo(Globals.EPIC_ID_FIELD, epicId)
                 .get()
                 .await()
 

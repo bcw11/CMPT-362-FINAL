@@ -23,5 +23,4 @@ class EpicViewModel(
             _epics.value = epicRepository.getAllByUserId(userId)
         }
     }
-
 }
