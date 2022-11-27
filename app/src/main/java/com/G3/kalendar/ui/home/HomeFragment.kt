@@ -88,15 +88,18 @@ class HomeFragment : Fragment() {
 
             else if(foundUser != null){
                 val toast = Toast.makeText(context, "Login Successful", Toast.LENGTH_LONG)
+                println("DEBUG: foundUser ID is " + foundUser.id)
                 toast.show()
+
+                var bundle = Bundle()
+                bundle.putString("id", foundUser.id)
+
                 _binding!!.FragmentHome.removeAllViews()
                 val navigationView = requireActivity().findViewById<View>(R.id.nav_view) as NavigationView
                 navigationView.menu.getItem(2).isChecked = true
-               /*val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.FragmentHome, CalendarFragment())
-                transaction.commit()*/
                 navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
-                navController.navigate(R.id.nav_kanban)
+                navController.navigate(R.id.nav_kanban, bundle)
+
             }
 
             else{

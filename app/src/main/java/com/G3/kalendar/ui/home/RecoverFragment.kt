@@ -1,7 +1,5 @@
 package com.G3.kalendar.ui.home
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,18 +57,32 @@ class RecoverFragment: Fragment() {
         _binding!!.btnRecoverAccount.setOnClickListener{
             enteredPIN = _binding!!.etPin.text.toString()
             println("Debug recoverfragment: enteredPIN is" + enteredPIN)
-            if(PIN.toString() == enteredPIN){
+            if(PIN == null){
+                val toast = Toast.makeText(context, "Wrong PIN", Toast.LENGTH_LONG)
+                toast.show()
+            }
+            else if (PIN.toString() != enteredPIN){
+                val toast = Toast.makeText(context, "Wrong PIN", Toast.LENGTH_LONG)
+                toast.show()
+            }
+            else if(PIN.toString() == enteredPIN){
+                var changePasswordFragment = ChangePasswordFragment()
+                val args = Bundle()
+                args.putString("Email", _binding!!.etEmail.text.toString())
+                println("Debug: email sent to changepassword fragment is " +_binding!!.etEmail.text.toString())
+                changePasswordFragment.arguments = args
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 _binding!!.FragmentRecover.removeAllViews()
-                transaction.replace(R.id.FragmentRecover, ChangePasswordFragment())
+                transaction.replace(R.id.FragmentRecover, changePasswordFragment)
                 transaction.commit()
             }
         }
 
         _binding!!.btnCancel.setOnClickListener{
+            var homeFragment = HomeFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentRecover.removeAllViews()
-            transaction.replace(R.id.FragmentRecover, HomeFragment())
+            transaction.replace(R.id.FragmentRecover, homeFragment)
             transaction.commit()
         }
         return root
