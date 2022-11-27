@@ -92,6 +92,7 @@ class HomeFragment : Fragment() {
                 toast.show()
 
                 editor.putString("id", foundUser.id)
+                editor.apply()
                 editor.commit()
                 _binding!!.FragmentHome.removeAllViews()
                 val navigationView = requireActivity().findViewById<View>(R.id.nav_view) as NavigationView
