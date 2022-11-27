@@ -3,28 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/FragmentHome"
-    tools:context=".ui.home.HomeFragment">
+    android:id="@+id/FragmentRecover"
+    tools:context=".ui.home.RecoverFragment">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kalender"
+        android:text="Kalendar"
         android:textSize="50sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="10dp"
-        android:layout_above="@id/tv_subtitle"/>
+        android:layout_above="@id/tv_subtitle"
+        />
 
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Planning App"
+        android:text="To recover your account enter your email and press send. \n A PIN will be sent to you email address"
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"
-        android:layout_above="@id/et_email"/>
+        android:layout_above="@id/et_email"
+        />
 
     <EditText
         android:id="@+id/et_email"
@@ -36,53 +38,54 @@
         android:layout_marginRight="20dp"
         android:padding="15dp"
         android:inputType="textEmailAddress"
-        android:layout_above="@id/et_password"
+        android:layout_above="@id/et_pin"
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/et_pin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="password"
+        android:hint="PIN sent to email"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:padding="15dp"
         android:textSize="15sp" />
-    <TextView
-        android:id="@+id/tv_recover"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@id/et_password"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:text="        Forgot your password?"/>
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_send_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_recover"
+        android:layout_below="@id/et_pin"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
-        android:text="login"/>
+        android:text="Send recovery PIN to Email"/>
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_recover_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_login"
+        android:layout_below="@id/btn_send_code"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:textColor="@android:color/white"
-        android:text="Create Account"/>
+        android:text="Recover Account"/>
 
-
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_recover_account"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@android:color/white"
+        android:text="Back to Login"/>
 
 </RelativeLayout>
