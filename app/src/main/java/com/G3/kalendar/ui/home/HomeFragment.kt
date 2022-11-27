@@ -91,14 +91,13 @@ class HomeFragment : Fragment() {
                 println("DEBUG: foundUser ID is " + foundUser.id)
                 toast.show()
 
-                var bundle = Bundle()
-                bundle.putString("id", foundUser.id)
-
+                editor.putString("id", foundUser.id)
+                editor.commit()
                 _binding!!.FragmentHome.removeAllViews()
                 val navigationView = requireActivity().findViewById<View>(R.id.nav_view) as NavigationView
                 navigationView.menu.getItem(2).isChecked = true
                 navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
-                navController.navigate(R.id.nav_kanban, bundle)
+                navController.navigate(R.id.nav_kanban)
 
             }
 
