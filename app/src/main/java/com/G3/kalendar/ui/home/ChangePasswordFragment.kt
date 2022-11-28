@@ -41,14 +41,11 @@ class ChangePasswordFragment: Fragment() {
             enteredPassword = _binding!!.etPassword.text.toString()
             reTypedPassword = _binding!!.etRetypePassword.text.toString()
 
-            /*if(enteredPassword == reTypedPassword){
-            viewModel.users.observe(requireActivity(), Observer {
-                usersList = it
-                for(user in usersList){
-
+            for (user in viewModel.users.value!!) {
+                if (user.email == userEmail) {
+                    viewModel.changePassword(user.id, enteredPassword)
                 }
-            })
-            }*/
+            }
         }
 
         _binding!!.btnCancel.setOnClickListener{
