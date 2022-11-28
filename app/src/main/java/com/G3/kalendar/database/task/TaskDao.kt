@@ -57,4 +57,13 @@ class TaskDao(private val db: FirebaseFirestore) {
         }
         return tasks
     }
+
+    suspend fun updateTaskStatus(taskId: String, status: Boolean) {
+        db.collection(Globals.TASK_TABLE_NAME).document(taskId)
+            .update(
+                mapOf(
+                    Globals.STATUS_FIELD to status
+                )
+            ).await()
+    }
 }

@@ -29,4 +29,8 @@ class TaskViewModel(
             _tasks.value = taskRepository.getAllByStoryId(userId, storyId)
         }
     }
+
+    fun updateTaskStatus(taskId: String, status: Boolean) {
+        taskRepository.updateTaskStatus(taskId, status)
+    }
 }
