@@ -89,7 +89,20 @@ class StoryDao(private val db: FirebaseFirestore) {
         return stories
     }
 
-    suspend fun delete(id: String) {
-        db.collection(Globals.STORY_TABLE_NAME).document(id).delete().await()
+    suspend fun delete(story: Story) {
+        db.collection(Globals.STORY_TABLE_NAME).document(story.id).delete().await()
+    }
+
+    suspend fun update(story: Story) {
+        db.collection(Globals.STORY_TABLE_NAME).document(story.id)
+            .update(
+                mapOf(
+                    Globals.EPIC_ID_FIELD to story.epicId,
+                    Globals.NAME_FIELD to story.name,
+                    Globals.DUE_DATE_FIELD to story.dueDate,
+                    Globals.STATUS_FIELD to story.status,
+                    Globals.CALENDAR_TIMES_FIELD to story.calendarTimes
+                )
+            ).await()
     }
 }

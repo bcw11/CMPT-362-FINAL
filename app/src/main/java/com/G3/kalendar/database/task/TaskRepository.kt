@@ -25,15 +25,15 @@ class TaskRepository(private val dao: TaskDao) {
         }
     }
 
-    fun updateTaskStatus(taskId: String, status: Boolean) {
+    fun updateStatus(task: Task) {
         CoroutineScope(IO).launch {
-            dao.updateTaskStatus(taskId, status)
+            dao.update(task)
         }
     }
 
-    fun delete(taskId: String) {
+    fun delete(task: Task) {
         CoroutineScope(IO).launch {
-            dao.delete(taskId)
+            dao.delete(task)
         }
     }
 }

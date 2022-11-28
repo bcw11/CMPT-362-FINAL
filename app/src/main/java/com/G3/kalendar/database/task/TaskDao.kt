@@ -58,16 +58,17 @@ class TaskDao(private val db: FirebaseFirestore) {
         return tasks
     }
 
-    suspend fun updateTaskStatus(taskId: String, status: Boolean) {
-        db.collection(Globals.TASK_TABLE_NAME).document(taskId)
+    suspend fun update(task: Task) {
+        db.collection(Globals.TASK_TABLE_NAME).document(task.id)
             .update(
                 mapOf(
-                    Globals.STATUS_FIELD to status
+                    Globals.NAME_FIELD to task.name,
+                    Globals.STATUS_FIELD to task.status
                 )
             ).await()
     }
 
-    suspend fun delete(id: String) {
-        db.collection(Globals.TASK_TABLE_NAME).document(id).delete().await()
+    suspend fun delete(task: Task) {
+        db.collection(Globals.TASK_TABLE_NAME).document(task.id).delete().await()
     }
 }

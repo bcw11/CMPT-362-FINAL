@@ -19,9 +19,9 @@ class EpicRepository(private val dao: EpicDao) {
         }
     }
 
-    fun delete(epicId: String) {
+    fun delete(epic: Epic) {
         CoroutineScope(IO).launch {
-            dao.delete(epicId)
+            dao.delete(epic)
         }
     }
 }

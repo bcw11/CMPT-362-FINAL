@@ -24,7 +24,7 @@ class EpicViewModel(
         }
     }
 
-    fun delete(epicId: String) {
-        epicRepository.delete(epicId)
+    fun delete(epic: Epic) {
+        epicRepository.delete(epic)
     }
 }

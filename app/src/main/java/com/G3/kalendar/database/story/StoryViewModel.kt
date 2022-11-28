@@ -33,7 +33,11 @@ class StoryViewModel(private val repository: StoryRepository, private val userId
         }
     }
 
-    fun delete(storyId: String) {
-        repository.delete(storyId)
+    fun delete(story: Story) {
+        repository.delete(story)
+    }
+
+    fun update(story: Story) {
+        repository.update(story)
     }
 }

@@ -32,9 +32,15 @@ class StoryRepository(private val dao: StoryDao) {
         }
     }
 
-    fun delete(storyId: String) {
+    fun delete(story: Story) {
         CoroutineScope(IO).launch {
-            dao.delete(storyId)
+            dao.delete(story)
+        }
+    }
+
+    fun update(story: Story) {
+        CoroutineScope(IO).launch {
+            dao.update(story)
         }
     }
 }

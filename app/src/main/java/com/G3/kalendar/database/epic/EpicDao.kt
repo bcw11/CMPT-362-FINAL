@@ -38,7 +38,7 @@ class EpicDao(private val db: FirebaseFirestore) {
         return epics
     }
 
-    suspend fun delete(id: String) {
-        db.collection(Globals.EPIC_TABLE_NAME).document(id).delete().await()
+    suspend fun delete(epic: Epic) {
+        db.collection(Globals.EPIC_TABLE_NAME).document(epic.id).delete().await()
     }
 }
