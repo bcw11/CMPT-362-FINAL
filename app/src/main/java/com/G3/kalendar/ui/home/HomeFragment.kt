@@ -1,14 +1,9 @@
 package com.G3.kalendar.ui.home
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,15 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.G3.kalendar.R
-import com.G3.kalendar.database.user.UserDao
-import com.G3.kalendar.database.user.UserRepository
+import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.user.UserViewModel
-import com.G3.kalendar.database.user.UserViewModelFactory
 import com.G3.kalendar.databinding.FragmentHomeBinding
-import com.G3.kalendar.ui.calendar.CalendarFragment
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
@@ -42,13 +32,10 @@ class HomeFragment : Fragment() {
     ): View {
 
         //sets up all the database stuff for user
-        val db = Firebase.firestore
-        val dao = UserDao(db)
-        val repository = UserRepository(dao)
-        val viewModelFactory = UserViewModelFactory(repository)
+        val factory = DatabaseViewModelFactory("")
         val viewModel = ViewModelProvider(
             this,
-            viewModelFactory
+            factory.userViewModelFactory
         ).get(UserViewModel::class.java)
 
         val homeViewModel =

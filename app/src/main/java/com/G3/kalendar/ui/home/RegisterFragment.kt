@@ -9,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
-import com.G3.kalendar.database.user.*
+import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.user.User
+import com.G3.kalendar.database.user.UserViewModel
 import com.G3.kalendar.databinding.FragmentRegisterBinding
-import com.google.android.material.navigation.NavigationView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 class RegisterFragment: Fragment() {
@@ -32,13 +31,10 @@ class RegisterFragment: Fragment() {
         val editor = sharedPref.edit()
 
         //sets up all the database stuff for user
-        val db = Firebase.firestore
-        val dao = UserDao(db)
-        val repository = UserRepository(dao)
-        val viewModelFactory = UserViewModelFactory(repository)
+        val factory = DatabaseViewModelFactory("")
         val viewModel = ViewModelProvider(
             this,
-            viewModelFactory
+            factory.userViewModelFactory
         ).get(UserViewModel::class.java)
 
 
