@@ -33,4 +33,8 @@ class TaskViewModel(
     fun updateTaskStatus(taskId: String, status: Boolean) {
         taskRepository.updateTaskStatus(taskId, status)
     }
+
+    fun deleteTask(taskId: String) {
+        taskRepository.deleteTask(taskId)
+    }
 }

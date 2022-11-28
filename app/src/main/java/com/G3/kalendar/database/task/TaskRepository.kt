@@ -30,4 +30,10 @@ class TaskRepository(private val dao: TaskDao) {
             dao.updateTaskStatus(taskId, status)
         }
     }
+
+    fun deleteTask(taskId: String) {
+        CoroutineScope(IO).launch {
+            dao.deleteTask(taskId)
+        }
+    }
 }
