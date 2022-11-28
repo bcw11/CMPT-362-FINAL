@@ -1,6 +1,7 @@
 package com.G3.kalendar.database.user
 
 import android.util.Log
+import com.G3.kalendar.Globals
 import com.G3.kalendar.database.user.User.Companion.toUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -15,21 +16,21 @@ class UserDao(private val db: FirebaseFirestore) {
         val password = hashSaltUtil.getHashedPassword(user.password, salt)
 
         val entry = hashMapOf(
-            "name" to user.name,
-            "email" to user.email,
-            "password" to password,
-            "salt" to salt
+            Globals.NAME_FIELD to user.name,
+            Globals.EMAIL_FIELD to user.email,
+            Globals.PASSWORD_FIELD to password,
+            Globals.SALT_FIELD to salt
         )
 
-        db.collection("users")
+        db.collection(Globals.USER_TABLE_NAME)
             .add(entry)
             .await()
     }
 
     suspend fun authenticate(email: String, password: String): User? {
         val user = try {
-            val query = db.collection("users")
-                .whereEqualTo("email", email)
+            val query = db.collection(Globals.USER_TABLE_NAME)
+                .whereEqualTo(Globals.EMAIL_FIELD, email)
                 .get()
                 .await()
 
@@ -58,7 +59,7 @@ class UserDao(private val db: FirebaseFirestore) {
 
     suspend fun getUser(userId: String): User? {
         return try {
-            db.collection("users")
+            db.collection(Globals.USER_TABLE_NAME)
                 .document(userId).get().await().toUser()
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user details", e)
@@ -68,11 +69,24 @@ class UserDao(private val db: FirebaseFirestore) {
 
     suspend fun getAll(): List<User> {
         return try {
-            db.collection("users").get().await()
+            db.collection(Globals.USER_TABLE_NAME).get().await()
                 .documents.mapNotNull { it.toUser() }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting all users", e)
             emptyList()
         }
+    }
+
+    suspend fun changePassword(userId: String, password: String) {
+        val salt = hashSaltUtil.getSalt()
+        val hashedPassword = hashSaltUtil.getHashedPassword(password, salt)
+
+        db.collection(Globals.USER_TABLE_NAME).document(userId)
+            .update(
+                mapOf(
+                    Globals.PASSWORD_FIELD to hashedPassword,
+                    Globals.SALT_FIELD to salt
+                )
+            ).await()
     }
 }

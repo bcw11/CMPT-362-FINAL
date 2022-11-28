@@ -30,4 +30,10 @@ class UserRepository(private val dao: UserDao) {
             dao.insert(user)
         }
     }
+
+    fun changePassword(userId: String, password: String) {
+        CoroutineScope(IO).launch {
+            dao.changePassword(userId, password)
+        }
+    }
 }

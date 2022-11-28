@@ -25,6 +25,10 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
     fun authenticate(email: String, password: String): User? {
         return repository.authenticate(email, password)
     }
+
+    fun changePassword(userId: String, password: String) {
+        repository.changePassword(userId, password)
+    }
 }
 
 class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

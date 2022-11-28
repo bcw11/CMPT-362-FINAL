@@ -9,6 +9,7 @@ object Globals {
     val EPIC_TABLE_NAME = "epics"
     val STORY_TABLE_NAME = "stories"
     val TASK_TABLE_NAME = "tasks"
+    val USER_TABLE_NAME = "users"
 
     // Table Fields
     val NAME_FIELD = "name"
@@ -20,4 +21,7 @@ object Globals {
     val DUE_DATE_FIELD = "dueDate"
     val STATUS_FIELD = "status"
     val CALENDAR_TIMES_FIELD = "calendarTimes"
+    val EMAIL_FIELD = "email"
+    val PASSWORD_FIELD = "password"
+    val SALT_FIELD = "salt"
 }
