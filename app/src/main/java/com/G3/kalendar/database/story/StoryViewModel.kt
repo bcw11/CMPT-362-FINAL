@@ -32,4 +32,8 @@ class StoryViewModel(private val repository: StoryRepository, private val userId
             _stories.value = repository.getAllByEpicId(userId, epicId)
         }
     }
+
+    fun delete(storyId: String) {
+        repository.delete(storyId)
+    }
 }

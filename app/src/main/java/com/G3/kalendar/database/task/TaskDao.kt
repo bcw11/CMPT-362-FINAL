@@ -67,7 +67,7 @@ class TaskDao(private val db: FirebaseFirestore) {
             ).await()
     }
 
-    suspend fun deleteTask(taskId: String) {
-        db.collection(Globals.TASK_TABLE_NAME).document(taskId).delete().await()
+    suspend fun delete(id: String) {
+        db.collection(Globals.TASK_TABLE_NAME).document(id).delete().await()
     }
 }

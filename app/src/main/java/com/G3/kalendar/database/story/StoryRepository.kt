@@ -31,4 +31,10 @@ class StoryRepository(private val dao: StoryDao) {
             dao.insertWithTasks(story, taskList)
         }
     }
+
+    fun delete(storyId: String) {
+        CoroutineScope(IO).launch {
+            dao.delete(storyId)
+        }
+    }
 }

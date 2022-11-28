@@ -18,4 +18,10 @@ class EpicRepository(private val dao: EpicDao) {
             dao.getAllByUserId(userId)
         }
     }
+
+    fun delete(epicId: String) {
+        CoroutineScope(IO).launch {
+            dao.delete(epicId)
+        }
+    }
 }

@@ -31,9 +31,9 @@ class TaskRepository(private val dao: TaskDao) {
         }
     }
 
-    fun deleteTask(taskId: String) {
+    fun delete(taskId: String) {
         CoroutineScope(IO).launch {
-            dao.deleteTask(taskId)
+            dao.delete(taskId)
         }
     }
 }

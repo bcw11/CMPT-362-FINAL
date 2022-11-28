@@ -23,4 +23,8 @@ class EpicViewModel(
             _epics.value = epicRepository.getAllByUserId(userId)
         }
     }
+
+    fun delete(epicId: String) {
+        epicRepository.delete(epicId)
+    }
 }

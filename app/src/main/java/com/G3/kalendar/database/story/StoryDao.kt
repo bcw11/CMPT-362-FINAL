@@ -88,4 +88,8 @@ class StoryDao(private val db: FirebaseFirestore) {
         }
         return stories
     }
+
+    suspend fun delete(id: String) {
+        db.collection(Globals.STORY_TABLE_NAME).document(id).delete().await()
+    }
 }
