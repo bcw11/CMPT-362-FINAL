@@ -44,11 +44,15 @@ class RegisterFragment: Fragment() {
         val root: View = binding.root
 
         _binding!!.btnCancel.setOnClickListener {
+            //testing
+
+            //
+
+
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentRegister.removeAllViews()
             transaction.replace(R.id.FragmentRegister, LoginFragment())
             transaction.commit()
-
         }
 
         _binding!!.btnRegister.setOnClickListener{
@@ -67,7 +71,7 @@ class RegisterFragment: Fragment() {
                 println("Debug registerfragment: user.password is " + user.password)
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 _binding!!.FragmentRegister.removeAllViews()
-                transaction.replace(R.id.FragmentRecover, LoginFragment())
+                transaction.replace(R.id.FragmentRegister, LoginFragment())
                 transaction.commit()
                  }
             else if(_binding!!.etPassword.text.toString() != _binding!!.etRepassword.text.toString()){

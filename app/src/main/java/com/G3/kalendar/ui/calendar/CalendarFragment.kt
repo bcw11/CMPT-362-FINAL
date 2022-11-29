@@ -1,13 +1,12 @@
 package com.G3.kalendar.ui.calendar
 
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.G3.kalendar.R
@@ -81,22 +80,44 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
 }
 
-
 // Child fragment that will be dynamically embedded in the parent
 class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
-    private var listviewArray:ArrayList<String> = ArrayList<String>()
+    private lateinit var weekView:WeekView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        for(i in 0..23){
-            val string = "$i:00"
-            listviewArray.add(string)
-        }
+        weekView = view.findViewById(R.id.week_view)
 
-        val listview: ListView = view.findViewById(R.id.listview)
-        val listviewAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireActivity(), android.R.layout
-            .simple_list_item_1, listviewArray)
-        listview.adapter = listviewAdapter
+        val weekView: WeekView = view.findViewById(R.id.week_view)
+        val columnWidth = (weekView.rootView.width/8)
+        val rowLength = 3*(weekView.rootView.height/24)
+        println("bebug $columnWidth $rowLength")
+        val rect = Rect(columnWidth,rowLength,columnWidth,rowLength)
+//        weekView.addStory(rect)
+
+        var button:Button = Button(context)
+        button.layoutParams = LinearLayout.LayoutParams(
+            columnWidth.toInt(),
+            rowLength.toInt())
+        button.text = "YOYOYO"
+        button.setOnClickListener{println("bebug YOYOYO")}
+        button.x = columnWidth.toFloat()
+        button.y = rowLength.toFloat()
+
+        weekView.addView(button)
+
+        button = Button(context)
+        button.layoutParams = LinearLayout.LayoutParams(
+            columnWidth.toInt(),
+            rowLength.toInt())
+        button.text = "BABABA"
+        button.setOnClickListener{println("bebug BABABA")}
+        button.x = 2*columnWidth.toFloat()
+        button.y = rowLength.toFloat()
+//        button2.setBackgroundColor(Color.CYAN)
+        weekView.addView(button)
     }
+
+
 }
