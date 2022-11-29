@@ -1,5 +1,6 @@
 package com.G3.kalendar.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import com.G3.kalendar.MainActivity
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.user.UserViewModel
-import com.G3.kalendar.databinding.FragmentHomeBinding
-import com.google.android.material.navigation.NavigationView
+import com.G3.kalendar.databinding.FragmentLoginBinding
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
+class LoginFragment : Fragment(){
+    private var _binding: FragmentLoginBinding? = null
     private lateinit var navController: NavController
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,24 +40,29 @@ class HomeFragment : Fragment() {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-
+        if(sharedPref.getString("id","") != "" ){
+            _binding!!.FragmentLogin.removeAllViews()
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
         _binding!!.tvRecover.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            _binding!!.FragmentHome.removeAllViews()
-            transaction.replace(R.id.FragmentHome, RecoverFragment())
+            _binding!!.FragmentLogin.removeAllViews()
+            transaction.replace(R.id.FragmentLogin, RecoverFragment())
             transaction.commit()
         }
 
         _binding!!.btnRegister.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            _binding!!.FragmentHome.removeAllViews()
-            transaction.replace(R.id.FragmentHome, RegisterFragment())
+            _binding!!.FragmentLogin.removeAllViews()
+            transaction.replace(R.id.FragmentLogin, RegisterFragment())
             transaction.commit()
         }
 
@@ -81,12 +85,10 @@ class HomeFragment : Fragment() {
                 editor.putString("id", foundUser.id)
                 editor.apply()
                 editor.commit()
-                _binding!!.FragmentHome.removeAllViews()
-                val navigationView = requireActivity().findViewById<View>(R.id.nav_view) as NavigationView
-                navigationView.menu.getItem(2).isChecked = true
-                navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
-                navController.navigate(R.id.nav_kanban)
-
+                _binding!!.FragmentLogin.removeAllViews()
+                val intent = Intent(activity, MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
 
             else{
@@ -97,12 +99,4 @@ class HomeFragment : Fragment() {
         }
         return root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }
-
-

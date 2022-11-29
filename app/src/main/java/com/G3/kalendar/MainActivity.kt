@@ -1,32 +1,26 @@
 package com.G3.kalendar
 
-import android.app.Activity
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.G3.kalendar.databinding.ActivityMainBinding
 import com.G3.kalendar.ui.calendar.CalendarFragment
-import com.G3.kalendar.ui.home.HomeFragment
+import com.G3.kalendar.ui.home.HomeActivity
 import com.G3.kalendar.ui.kanban.KanbanFragment
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,14 +55,14 @@ class MainActivity : AppCompatActivity() {
         //set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        println("DEBUG: sharedPref id is " +sharedPref.getString("id", ""))
+//        println("DEBUG: sharedPref id is " +sharedPref.getString("id", ""))
         if(sharedPref.getString("id", "") != ""){
             navGraph.setStartDestination(R.id.nav_kanban)
         }
 //        else{
 //            navGraph.setStartDestination(R.id.nav_home)
 //        }
-        navController.graph = navGraph
+       navController.graph = navGraph
 
         // getting current fragment label
         var currentLabel = navController.currentDestination?.label
@@ -113,7 +107,10 @@ class MainActivity : AppCompatActivity() {
                 val navigationView = this.findViewById<View>(R.id.nav_view) as NavigationView
                 navigationView.menu.getItem(0).isChecked = true
                 navController = this.findNavController(R.id.nav_host_fragment_content_main)
-//                navController.navigate(R.id.nav_home)
+//              navController.navigate(R.id.nav_home)
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
                 return true
             }
         }

@@ -47,7 +47,7 @@ class ChangePasswordFragment: Fragment() {
                 }
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 _binding!!.FragmentChangePassword.removeAllViews()
-                transaction.replace(R.id.FragmentRecover, HomeFragment())
+                transaction.replace(R.id.FragmentRecover, LoginFragment())
                 transaction.commit()
             }
         }
@@ -55,7 +55,7 @@ class ChangePasswordFragment: Fragment() {
         _binding!!.btnCancel.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentChangePassword.removeAllViews()
-            transaction.replace(R.id.FragmentRecover, HomeFragment())
+            transaction.replace(R.id.FragmentRecover, LoginFragment())
             transaction.commit()
         }
 
