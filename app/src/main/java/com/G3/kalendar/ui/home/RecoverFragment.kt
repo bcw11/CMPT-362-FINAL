@@ -79,10 +79,10 @@ class RecoverFragment: Fragment() {
         }
 
         _binding!!.btnCancel.setOnClickListener{
-            var homeFragment = HomeFragment()
+            var loginFragment = LoginFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentRecover.removeAllViews()
-            transaction.replace(R.id.FragmentRecover, homeFragment)
+            transaction.replace(R.id.FragmentRecover, loginFragment)
             transaction.commit()
         }
         return root
