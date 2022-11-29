@@ -45,6 +45,10 @@ class ChangePasswordFragment: Fragment() {
                 if (user.email == userEmail) {
                     viewModel.changePassword(user.id, enteredPassword)
                 }
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                _binding!!.FragmentChangePassword.removeAllViews()
+                transaction.replace(R.id.FragmentRecover, HomeFragment())
+                transaction.commit()
             }
         }
 
