@@ -1,10 +1,12 @@
 package com.G3.kalendar.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import com.G3.kalendar.MainActivity
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.user.UserViewModel
@@ -37,6 +39,13 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val root: View = binding.root
+
+
+        if(sharedPref.getString("id","") != "" ){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
 
         val transaction = this.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.ActivityHome,LoginFragment())

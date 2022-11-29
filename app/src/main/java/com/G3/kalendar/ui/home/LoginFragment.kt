@@ -46,12 +46,6 @@ class LoginFragment : Fragment(){
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        if(sharedPref.getString("id","") != "" ){
-            _binding!!.FragmentLogin.removeAllViews()
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
         _binding!!.tvRecover.setOnClickListener{
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentLogin.removeAllViews()
