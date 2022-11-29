@@ -53,7 +53,8 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
+        //R.id.nav_home,
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -64,10 +65,10 @@ class MainActivity : AppCompatActivity() {
         if(sharedPref.getString("id", "") != ""){
             navGraph.setStartDestination(R.id.nav_kanban)
         }
-        else{
-            navGraph.setStartDestination(R.id.nav_home)
-        }
-        navController.graph=navGraph
+//        else{
+//            navGraph.setStartDestination(R.id.nav_home)
+//        }
+        navController.graph = navGraph
 
         // getting current fragment label
         var currentLabel = navController.currentDestination?.label
@@ -82,14 +83,14 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.fab.setOnClickListener {
             currentLabel = navController.currentDestination?.label
             // finding current fragment
-//            if(currentLabel == CalendarFragment().label){
-////                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
-//                navController.navigate(R.id.nav_kanban)
-//            }
-//            if(currentLabel == KanbanFragment().label){
-////                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
-//                navController.navigate(R.id.nav_calendar)
-//            }
+            if(currentLabel == CalendarFragment().label){
+                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
+                navController.navigate(R.id.nav_kanban)
+            }
+            if(currentLabel == KanbanFragment().label){
+                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
+                navController.navigate(R.id.nav_calendar)
+            }
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                 val navigationView = this.findViewById<View>(R.id.nav_view) as NavigationView
                 navigationView.menu.getItem(0).isChecked = true
                 navController = this.findNavController(R.id.nav_host_fragment_content_main)
-                navController.navigate(R.id.nav_home)
+//                navController.navigate(R.id.nav_home)
                 return true
             }
         }
