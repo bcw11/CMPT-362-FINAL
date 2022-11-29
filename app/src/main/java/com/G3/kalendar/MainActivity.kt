@@ -18,7 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.G3.kalendar.databinding.ActivityMainBinding
 import com.G3.kalendar.ui.calendar.CalendarFragment
-import com.G3.kalendar.ui.home.HomeActivity
+import com.G3.kalendar.ui.home.LoginActivity
 import com.G3.kalendar.ui.kanban.KanbanFragment
 import com.google.android.material.navigation.NavigationView
 
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                 navigationView.menu.getItem(0).isChecked = true
                 navController = this.findNavController(R.id.nav_host_fragment_content_main)
 //              navController.navigate(R.id.nav_home)
-                val intent = Intent(this, HomeActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
                 return true

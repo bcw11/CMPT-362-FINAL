@@ -25,8 +25,8 @@ class RecoverFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val loginViewModel =
+            ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding = FragmentRecoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

@@ -22,7 +22,7 @@
             android:theme="@style/Theme.Kalendar.NoActionBar"/>
 
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.home.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Kalendar.NoActionBar">
