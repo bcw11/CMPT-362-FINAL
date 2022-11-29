@@ -34,6 +34,7 @@ class RecoverFragment: Fragment() {
         _binding!!.btnSendCode.setOnClickListener{
             val toast = Toast.makeText(context, "A PIN has been sent to the email you entered", Toast.LENGTH_LONG)
             toast.show()
+            //email is for testing purposes
             val rnd = Random()
             PIN = rnd.nextInt(999999)
             val stringPIN = String.format("%06d", PIN)
@@ -78,9 +79,10 @@ class RecoverFragment: Fragment() {
         }
 
         _binding!!.btnCancel.setOnClickListener{
+            var homeFragment = HomeFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentRecover.removeAllViews()
-            transaction.replace(R.id.FragmentRecover, LoginFragment())
+            transaction.replace(R.id.FragmentRecover, homeFragment)
             transaction.commit()
         }
         return root

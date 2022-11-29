@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
@@ -47,11 +44,15 @@ class RegisterFragment: Fragment() {
         val root: View = binding.root
 
         _binding!!.btnCancel.setOnClickListener {
+            //testing
+
+            //
+
+
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             _binding!!.FragmentRegister.removeAllViews()
-            transaction.replace(R.id.FragmentRegister, LoginFragment())
+            transaction.replace(R.id.FragmentRegister, HomeFragment())
             transaction.commit()
-
         }
 
         _binding!!.btnRegister.setOnClickListener{
@@ -70,7 +71,7 @@ class RegisterFragment: Fragment() {
                 println("Debug registerfragment: user.password is " + user.password)
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 _binding!!.FragmentRegister.removeAllViews()
-                transaction.replace(R.id.FragmentRecover, LoginFragment())
+                transaction.replace(R.id.FragmentRegister, HomeFragment())
                 transaction.commit()
                  }
             else if(_binding!!.etPassword.text.toString() != _binding!!.etRepassword.text.toString()){
