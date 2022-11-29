@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -36,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
         // turning off night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
@@ -51,6 +56,18 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //set start destination
+        navController = this.findNavController(R.id.nav_host_fragment_content_main)
+        var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+        println("DEBUG: sharedPref id is " +sharedPref.getString("id", ""))
+        if(sharedPref.getString("id", "") != ""){
+            navGraph.setStartDestination(R.id.nav_kanban)
+        }
+        else{
+            navGraph.setStartDestination(R.id.nav_home)
+        }
+        navController.graph=navGraph
 
         // getting current fragment label
         var currentLabel = navController.currentDestination?.label
@@ -82,6 +99,25 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_logout-> {
+                val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                editor.clear()
+                editor.commit()
+
+                val navigationView = this.findViewById<View>(R.id.nav_view) as NavigationView
+                navigationView.menu.getItem(0).isChecked = true
+                navController = this.findNavController(R.id.nav_host_fragment_content_main)
+                navController.navigate(R.id.nav_home)
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
