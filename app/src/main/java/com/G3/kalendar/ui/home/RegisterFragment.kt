@@ -38,8 +38,8 @@ class RegisterFragment: Fragment() {
         ).get(UserViewModel::class.java)
 
 
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val loginViewModel =
+            ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

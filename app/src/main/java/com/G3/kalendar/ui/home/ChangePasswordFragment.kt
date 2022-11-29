@@ -24,8 +24,8 @@ class ChangePasswordFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val loginViewModel =
+            ViewModelProvider(this).get(LoginViewModel::class.java)
         var userEmail = arguments?.getString("Email")
         println("Debug: userEmail is " + userEmail)
         _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
