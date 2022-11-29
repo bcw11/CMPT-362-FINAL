@@ -10,6 +10,12 @@ class StoryViewModel(private val repository: StoryRepository, private val userId
     private val _stories = MutableLiveData<List<Story>>()
     val stories: LiveData<List<Story>> = _stories
 
+    init {
+        viewModelScope.launch {
+            _stories.value = repository.getAllByUserId(userId)
+        }
+    }
+
     fun insert(story: Story) {
         story.userId = userId
         repository.insert(story)

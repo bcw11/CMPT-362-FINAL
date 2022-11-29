@@ -1,5 +1,6 @@
 package com.G3.kalendar.ui.calendar
 
+import android.content.Context.MODE_PRIVATE
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
@@ -7,9 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
+import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.story.StoryViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +39,14 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
         // setting days of month
         setDaysOfMonth(view)
+
+
+        val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
+        val viewModel = ViewModelProvider(
+            requireActivity(),
+            factory.storyViewModelFactory
+        ).get(StoryViewModel::class.java)
     }
 
     private fun setDaysOfMonth(view: View) {

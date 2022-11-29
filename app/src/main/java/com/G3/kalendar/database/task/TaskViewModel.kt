@@ -13,6 +13,12 @@ class TaskViewModel(
     private val _tasks = MutableLiveData<List<Task>>()
     val tasks: LiveData<List<Task>> = _tasks
 
+    init {
+        viewModelScope.launch {
+            _tasks.value = taskRepository.getAllByUserId(userId)
+        }
+    }
+
     fun insert(task: Task) {
         task.userId = userId
         taskRepository.insert(task)
