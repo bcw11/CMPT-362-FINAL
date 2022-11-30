@@ -1,0 +1,26 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <PreferenceCategory android:title="Unit Preferences"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            android:title="Time preference"
+            android:summary="24hr clock or 12hr clock">/>
+        </Preference>
+
+        <CheckBoxPreference
+            app:iconSpaceReserved="false"
+            android:defaultValue="3"
+            android:title="Privacy Setting"
+            android:summary="Posting your records anonymously" />
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

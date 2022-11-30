@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+        val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         // turning off night mode
@@ -110,8 +110,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.action_settings->{
+                val intent = Intent(this,Preference::class.java)
+                startActivity(intent)
+            }
             R.id.action_logout-> {
-                val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+                val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.clear()
                 editor.commit()
