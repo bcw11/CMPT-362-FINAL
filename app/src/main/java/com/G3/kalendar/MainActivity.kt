@@ -2,13 +2,13 @@ package com.G3.kalendar
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -20,9 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.G3.kalendar.databinding.ActivityMainBinding
 import com.G3.kalendar.ui.calendar.CalendarFragment
 import com.G3.kalendar.ui.home.LoginActivity
-import com.G3.kalendar.ui.home.LoginFragment
 import com.G3.kalendar.ui.kanban.KanbanFragment
-import com.G3.kalendar.ui.stats.StatsFragment
 import com.google.android.material.navigation.NavigationView
 
 
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+        val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
         // turning off night mode
@@ -50,36 +48,59 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar, R.id.nav_stats), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        if(sharedPref.getString("id", "") != ""){
+        if(sharedPref.getString("id", "") != "") {
             navGraph.setStartDestination(R.id.nav_kanban)
+            binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
         }
        navController.graph = navGraph
 
+        // fixed navigation menu bug
+        navView.setNavigationItemSelectedListener{
+            when(it.itemId){
+                R.id.nav_calendar -> {
+                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_kanban))
+                    navController.navigate(R.id.nav_calendar)
+                }
+                R.id.nav_kanban -> {
+                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
+                    navController.navigate(R.id.nav_kanban)
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            false
+        }
+
         // adapted from https://stackoverflow.com/questions/67147901/kotlin-opening-new-fragment-in-nav-drawer-example
         // switching icons https://stackoverflow.com/questions/15052669/android-change-button-icon-when-clicked
-
         // switches between calendar and kanban fragments
-        binding.appBarMain.fab.setOnClickListener {
+        binding.appBarMain.switchFab.setOnClickListener {
             var currentLabel = navController.currentDestination?.label
+
             // finding current fragment
             if(currentLabel == CalendarFragment().label){
-                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
                 navController.navigate(R.id.nav_kanban)
             }
             if(currentLabel == KanbanFragment().label){
-                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_kanban))
                 navController.navigate(R.id.nav_calendar)
             }
-
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
+
+        // adds epics and stories
+        binding.appBarMain.addFab.setOnClickListener {
+            val intent = Intent(this, AddTicket::class.java)
+            startActivity(intent)
+
+        }
+
 
     }
 
@@ -91,8 +112,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.action_settings->{
+                val intent = Intent(this,Preference::class.java)
+                startActivity(intent)
+            }
             R.id.action_logout-> {
-                val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
+                val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.clear()
                 editor.commit()
@@ -114,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
 
 }

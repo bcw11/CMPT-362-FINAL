@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/jiraticket_border"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/storyName"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="left|top"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="story"
+        android:textSize="18sp"
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/epicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right|top"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="epic"
+        android:textSize="18sp"
+        android:layout_marginRight="40dp"
+        />
+
+    <TextView
+        android:id="@+id/subtaskCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/storyName"
+        android:text="subtaskCount"
+        android:gravity="end|top"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp"
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/dueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/epicName"
+        android:text="time"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp"
+        android:layout_marginRight="40dp"
+        />
+
+</RelativeLayout>

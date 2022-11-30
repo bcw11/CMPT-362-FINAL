@@ -91,6 +91,43 @@ class StoryDao(private val db: FirebaseFirestore) {
         return stories
     }
 
+    suspend fun getAllByStatus(userId: String, status: String): List<Story> {
+        val stories = ArrayList<Story>()
+        try {
+            val query = db.collection(Globals.STORY_TABLE_NAME)
+                .whereEqualTo(Globals.USER_ID_FIELD, userId)
+                .whereEqualTo(Globals.STATUS_FIELD, status)
+                .get()
+                .await()
+
+            for (document in query.documents) {
+                document.toStory()?.let { stories.add(it) }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting matching stories", e)
+        }
+        return stories
+    }
+
+    suspend fun getAllByStatusAndEpicId(userId: String, status: String, epicId: String): List<Story> {
+        val stories = ArrayList<Story>()
+        try {
+            val query = db.collection(Globals.STORY_TABLE_NAME)
+                .whereEqualTo(Globals.USER_ID_FIELD, userId)
+                .whereEqualTo(Globals.STATUS_FIELD, status)
+                .whereEqualTo(Globals.EPIC_ID_FIELD, epicId)
+                .get()
+                .await()
+
+            for (document in query.documents) {
+                document.toStory()?.let { stories.add(it) }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting matching stories", e)
+        }
+        return stories
+    }
+
     suspend fun delete(story: Story) {
         db.collection(Globals.STORY_TABLE_NAME).document(story.id).delete().await()
     }

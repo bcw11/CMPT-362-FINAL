@@ -6,7 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class StoryViewModel(private val repository: StoryRepository, private val userId: String) : ViewModel() {
+class StoryViewModel(private val repository: StoryRepository, private val userId: String) :
+    ViewModel() {
     private val _stories = MutableLiveData<List<Story>>()
     val stories: LiveData<List<Story>> = _stories
 
@@ -36,6 +37,18 @@ class StoryViewModel(private val repository: StoryRepository, private val userId
     fun getAllByEpicId(epicId: String) {
         viewModelScope.launch {
             _stories.value = repository.getAllByEpicId(userId, epicId)
+        }
+    }
+
+    fun getAllByStatus(status: String) {
+        viewModelScope.launch {
+            _stories.value = repository.getAllByStatus(userId, status)
+        }
+    }
+
+    fun getAllByStatusAndEpicId(status: String, epicId: String) {
+        viewModelScope.launch {
+            _stories.value = repository.getAllByStatusAndEpicId(userId, status, epicId)
         }
     }
 

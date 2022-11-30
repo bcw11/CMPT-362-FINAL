@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.G3.kalendar.ui.kanban.AlarmManagement
 
 class ExactAlarmBroadcastReceiver : BroadcastReceiver() {
     private val CHANNEL_ID = "Kalendar Notifications"
@@ -27,8 +26,8 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver() {
             .setSilent(false)
             .setContentText("Time for $storyName!")
             .setSmallIcon(R.drawable.ic_menu_camera)
-            .addAction(R.drawable.ic_menu_gallery, "Start", testPendingIntent)
-            .addAction(R.drawable.ic_menu_gallery, "Cancel", testPendingIntent)
+            .addAction(R.drawable.ic_menu_kanban, "Start", testPendingIntent)
+            .addAction(R.drawable.ic_menu_kanban, "Cancel", testPendingIntent)
 
         val notification = notificationBuilder.build()
 
