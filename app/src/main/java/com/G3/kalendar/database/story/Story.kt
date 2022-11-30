@@ -14,7 +14,8 @@ data class Story(
     var name: String = "",
     var dueDate: Long = 0L,
     var status: String = "",
-    var calendarTimes: List<Long> = ArrayList()
+    var calendarTimes: List<Long> = ArrayList(),
+    var color: Int = 0
 ) : Parcelable {
     companion object {
         fun DocumentSnapshot.toStory(): Story? {
@@ -25,6 +26,7 @@ data class Story(
                 val dueDate = getLong(Globals.DUE_DATE_FIELD)!!
                 val status = getString(Globals.STATUS_FIELD)!!
                 val calendarTimes = data!![Globals.CALENDAR_TIMES_FIELD]!! as List<Long>
+                var color = getString(Globals.COLOR_FIELD)!!
 
                 Story(id, userId, epicId, name, dueDate, status, calendarTimes)
             } catch (e: Exception) {
