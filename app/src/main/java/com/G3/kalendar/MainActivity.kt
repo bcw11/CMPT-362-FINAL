@@ -96,9 +96,11 @@ class MainActivity : AppCompatActivity() {
 
         // adds epics and stories
         binding.appBarMain.addFab.setOnClickListener {
+            val intent = Intent(this, AddTicket::class.java)
+            startActivity(intent)
 
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
+
 
     }
 
@@ -137,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
 
 }

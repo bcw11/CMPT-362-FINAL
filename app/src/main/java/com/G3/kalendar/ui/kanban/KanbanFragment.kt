@@ -1,5 +1,6 @@
 package com.G3.kalendar.ui.kanban
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,6 +62,11 @@ class KanbanFragment : Fragment() {
         tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager2, tabConfigurationStrategy)
         tabLayoutMediator.attach()
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        parentFragmentManager.beginTransaction().detach(this).attach(this).commit()
     }
 
     override fun onDestroyView() {

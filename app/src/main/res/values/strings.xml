@@ -11,4 +11,13 @@
     <string name="menu_home">Home</string>
     <string name="menu_kanban">Kanban</string>
     <string name="menu_calendar">Calendar</string>
+
+    <string name="save">SAVE</string>
+    <string name="cancel">CANCEL</string>
+
+    <string-array name="statusList">
+        <item>To Do</item>
+        <item>In Progress</item>
+        <item>Done</item>
+    </string-array>
 </resources>
