@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import com.G3.kalendar.Globals
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.epic.Epic
@@ -44,7 +45,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
         // setting days of month
         setDaysOfMonth(view)
-
 
         // getting epic database
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
@@ -136,13 +136,19 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
 
-        if(epic != null)
-            viewModel.getAllByEpicId(epic.id)
-        else
-            weekView.populateStories(viewModel.stories.value)
+        val c = Calendar.getInstance().timeInMillis
+        val g:List<Long> = listOf(c)
+        val story = Story("","","","CMPT 413",0L, Globals.TO_DO_STATUS,g,0)
+        val stories = listOf(story)
+        weekView.populateStories(stories)
 
-        viewModel.stories.observe(requireActivity()){
-            weekView.populateStories(it)
-        }
+//        if(epic != null)
+//            viewModel.getAllByEpicId(epic.id)
+//        else
+//            weekView.populateStories(viewModel.stories.value)
+//
+//        viewModel.stories.observe(requireActivity()){
+//            weekView.populateStories(it)
+//        }
     }
 }

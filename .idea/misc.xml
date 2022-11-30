@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_layout.xml" value="0.197" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_status_complete.xml" value="0.197" />
+        <entry key="app/src/main/res/drawable/task_status.xml" value="0.197" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11548913043478261" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.11548913043478261" />
         <entry key="app/src/main/res/layout/calendar_listview_adapter.xml" value="0.24365942028985507" />

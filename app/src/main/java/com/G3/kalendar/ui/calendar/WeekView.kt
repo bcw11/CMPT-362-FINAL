@@ -4,6 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
+import android.graphics.drawable.shapes.RectShape
+import android.graphics.drawable.shapes.RoundRectShape
+import android.graphics.drawable.shapes.Shape
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
 import android.view.Gravity
@@ -13,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
+import com.G3.kalendar.Globals
 import com.G3.kalendar.MainActivity
 import com.G3.kalendar.R
 import com.G3.kalendar.database.story.Story
@@ -98,16 +105,46 @@ class WeekView @JvmOverloads constructor(
                 val min = calendar.get(Calendar.MINUTE).toFloat()/60
                 hour += min
 
-                // setting button
+                // setting button location
                 var button = Button(context)
                 button.layoutParams = LinearLayout.LayoutParams(
                     columnWidth.toInt(),
                     rowLength.toInt()/2)
                 button.gravity = Gravity.TOP
                 button.text = story.name
-                button.textSize = 7.5f
+                button.setPadding(15,15,15,15)
+                button.textSize = 10f
+                button.setTextColor(Color.WHITE)
                 button.x = dayOfWeek*columnWidth
                 button.y = hour*rowLength
+
+                val floatArray = FloatArray(8)
+                for(i in 0..7)
+                    floatArray[i] = 10f
+
+                var statusColor = 0
+                when(story.status){
+                    Globals.TO_DO_STATUS -> statusColor = resources.getColor(R.color.todo)
+                    Globals.IN_PROGRESS_STATUS -> statusColor = resources.getColor(R.color.in_progress)
+                    Globals.DONE_STATUS -> statusColor = resources.getColor(R.color.done)
+                }
+
+                // setting button colour
+                var boarder = ShapeDrawable()
+                boarder.shape = RoundRectShape(floatArray,null,null)
+                boarder.paint.strokeWidth = 10f
+                boarder.paint.style = Paint.Style.STROKE
+                boarder.paint.color = statusColor
+
+                var fill = ShapeDrawable()
+                fill.shape = RoundRectShape(floatArray,null,null)
+                fill.paint.style = Paint.Style.FILL_AND_STROKE
+                fill.paint.color = Color.GRAY
+//                fill.paint.color = story.color
+
+                var composite = LayerDrawable(arrayOf(fill,boarder))
+                button.background = composite
+
                 val intent = Intent(context, LoginActivity::class.java)
                 button.setOnClickListener{context.startActivity(intent)}
                 addView(button)
@@ -116,5 +153,9 @@ class WeekView @JvmOverloads constructor(
             }
         }
     }
+
+//            button.setBackgroundColor(resources.getColor(R.color.gray))
+//            button.setBackgroundResource(R.drawable.button_layout)
+//            button.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_status_complete,0, 0,0)
 
 }

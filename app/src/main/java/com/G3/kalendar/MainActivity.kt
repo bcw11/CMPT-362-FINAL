@@ -8,10 +8,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -54,17 +56,25 @@ class MainActivity : AppCompatActivity() {
         // set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        if(sharedPref.getString("id", "") != ""){
+        if(sharedPref.getString("id", "") != "")
             navGraph.setStartDestination(R.id.nav_kanban)
-        }
        navController.graph = navGraph
+
+        navView.setNavigationItemSelectedListener{
+            when(it.itemId){
+                R.id.nav_kanban -> navController.navigate(R.id.nav_kanban)
+                R.id.nav_calendar -> navController.navigate(R.id.nav_calendar)
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            false
+        }
 
         // adapted from https://stackoverflow.com/questions/67147901/kotlin-opening-new-fragment-in-nav-drawer-example
         // switching icons https://stackoverflow.com/questions/15052669/android-change-button-icon-when-clicked
-
         // switches between calendar and kanban fragments
         binding.appBarMain.switchFab.setOnClickListener {
             var currentLabel = navController.currentDestination?.label
+
             // finding current fragment
             if(currentLabel == CalendarFragment().label){
                 binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
