@@ -20,6 +20,18 @@ class StoryRepository(private val dao: StoryDao) {
         }
     }
 
+    suspend fun getAllByStatus(userId: String, status: String): List<Story> {
+        return withContext(CoroutineScope(IO).coroutineContext) {
+            dao.getAllByStatus(userId, status)
+        }
+    }
+
+    suspend fun getAllByStatusAndEpicId(userId: String, status: String, epicId: String): List<Story> {
+        return withContext(CoroutineScope(IO).coroutineContext) {
+            dao.getAllByStatusAndEpicId(userId, status, epicId)
+        }
+    }
+
     fun insert(story: Story) {
         CoroutineScope(IO).launch {
             dao.insert(story)
