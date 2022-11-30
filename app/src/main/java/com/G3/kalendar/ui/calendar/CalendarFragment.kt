@@ -136,11 +136,13 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
 
-        if(epic != null){
+        if(epic != null)
+            viewModel.getAllByEpicId(epic.id)
+        else
+            weekView.populateStories(viewModel.stories.value)
 
+        viewModel.stories.observe(requireActivity()){
+            weekView.populateStories(it)
         }
-
-        var stories = viewModel.stories.value
-        weekView.populateStories(stories)
     }
 }

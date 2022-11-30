@@ -63,17 +63,22 @@ class MainActivity : AppCompatActivity() {
         // switching icons https://stackoverflow.com/questions/15052669/android-change-button-icon-when-clicked
 
         // switches between calendar and kanban fragments
-        binding.appBarMain.fab.setOnClickListener {
+        binding.appBarMain.switchFab.setOnClickListener {
             var currentLabel = navController.currentDestination?.label
             // finding current fragment
             if(currentLabel == CalendarFragment().label){
-                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
                 navController.navigate(R.id.nav_kanban)
             }
             if(currentLabel == KanbanFragment().label){
-                binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
                 navController.navigate(R.id.nav_calendar)
             }
+        }
+
+        // adds epics and stories
+        binding.appBarMain.addFab.setOnClickListener {
+
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 
