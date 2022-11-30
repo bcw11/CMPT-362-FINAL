@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.G3.kalendar.Globals
 import com.G3.kalendar.MainActivity
 import com.G3.kalendar.R
+import com.G3.kalendar.ViewKanbanTicket
 import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.ui.home.LoginActivity
 import java.util.*
@@ -145,7 +146,7 @@ class WeekView @JvmOverloads constructor(
                 var composite = LayerDrawable(arrayOf(fill,boarder))
                 button.background = composite
 
-                val intent = Intent(context, LoginActivity::class.java)
+                val intent = Intent(context, ViewKanbanTicket::class.java)
                 button.setOnClickListener{context.startActivity(intent)}
                 addView(button)
 
