@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import com.G3.kalendar.MainActivity
@@ -17,6 +18,7 @@ import com.G3.kalendar.R
 import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.ui.home.LoginActivity
 import java.util.*
+import java.util.Collections.max
 
 class WeekView @JvmOverloads constructor(
     context: Context,
@@ -62,6 +64,11 @@ class WeekView @JvmOverloads constructor(
                 columnWidth-10,
                 (i*rowLength)+(bounds.height()/2), paint)
         }
+
+        // scroll to correct position on screen
+        val scrollView: ScrollView = rootView.findViewById(R.id.scroll_view)
+        val c = Math.max(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) - 2,0)
+        scrollView.scrollTo(0, c*rowLength.toInt())
     }
 
     fun populateStories(stories:List<Story>?){
@@ -95,7 +102,7 @@ class WeekView @JvmOverloads constructor(
                 var button = Button(context)
                 button.layoutParams = LinearLayout.LayoutParams(
                     columnWidth.toInt(),
-                    rowLength.toInt())
+                    rowLength.toInt()/2)
                 button.gravity = Gravity.TOP
                 button.text = story.name
                 button.textSize = 7.5f

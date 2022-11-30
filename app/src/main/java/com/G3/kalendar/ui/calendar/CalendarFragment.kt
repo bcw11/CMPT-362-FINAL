@@ -9,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.epic.Epic
+import com.G3.kalendar.database.epic.EpicViewModel
 import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryViewModel
 import java.text.SimpleDateFormat
@@ -22,7 +25,7 @@ import java.util.*
 
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {
-    public val label = "Calendar"
+    val label = "Calendar"
 
     private val dayofWeek = arrayOf(R.id.sunday_text,R.id.monday_text,R.id.tuesday_text, R.id.wednesday_text,
                                     R.id.thursday_text,R.id.friday_text,R.id.saturday_text)
@@ -43,12 +46,28 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         setDaysOfMonth(view)
 
 
+        // getting epic database
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
-        val viewModel = ViewModelProvider(
-            requireActivity(),
-            factory.storyViewModelFactory
-        ).get(StoryViewModel::class.java)
+        val viewModel = ViewModelProvider(requireActivity(), factory.epicViewModelFactory)[EpicViewModel::class.java]
+        val epics = viewModel.epics.value
+
+        // getting epic names
+        var epicNames:Array<String> = arrayOf()
+        if (epics != null) {
+            for(epic in epics)
+                epicNames += epic.title
+        }
+
+        // initializing filter drop down
+        val arrayAdapter = ArrayAdapter(requireContext(),R.layout.filter_item,epicNames)
+        val autoCompleteTV:AutoCompleteTextView = view.findViewById(R.id.auto_compelete_TV)
+        autoCompleteTV.setAdapter(arrayAdapter)
+        autoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+            if(epics != null){
+                ChildFragment().populateStories(epics[i])
+            }
+        }
     }
 
     private fun setDaysOfMonth(view: View) {
@@ -86,7 +105,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         monthText.text = "$month"
     }
 
-
     // adapted from https://guides.codepath.com/android/Creating-and-Using-Fragments
     // Embeds the child fragment dynamically
     private fun insertNestedFragment() {
@@ -105,39 +123,24 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // initializing week view
+        weekView = view.findViewById(R.id.week_view)
 
+        populateStories(null)
+    }
+
+
+    fun populateStories(epic: Epic?){
         // getting user's story database
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+
+        if(epic != null){
+
+        }
+
         var stories = viewModel.stories.value
-
-        // test
-        val time1:List<Long> = listOf(Calendar.getInstance().timeInMillis)
-        val story1 = Story("","","","CMPT 362",0L,"",time1)
-
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.DAY_OF_WEEK,2)
-        val time2:List<Long> = listOf(calendar.timeInMillis)
-        val story2 = Story("","","","CMPT 413",0L,"",time2)
-        stories = listOf(story1,story2)
-
-        // initializing week view
-        weekView = view.findViewById(R.id.week_view)
         weekView.populateStories(stories)
-
-        // test
-        calendar.set(Calendar.DAY_OF_WEEK,1)
-        val time3:List<Long> = listOf(calendar.timeInMillis)
-        val story3 = Story("","","","CMPT A",0L,"",time3)
-
-        calendar.set(Calendar.DAY_OF_WEEK,0)
-        val time4:List<Long> = listOf(calendar.timeInMillis)
-        val story4 = Story("","","","CMPT B",0L,"",time4)
-        val stories2 = listOf(story3,story4)
-//        weekView.populateStories(stories2)
-
     }
-
-
 }

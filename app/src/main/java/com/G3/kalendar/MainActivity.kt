@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        //set start destination
+        // set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
         if(sharedPref.getString("id", "") != ""){
