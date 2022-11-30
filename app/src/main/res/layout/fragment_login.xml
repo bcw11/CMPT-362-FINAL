@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/FragmentLogin">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_title"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom"
+        android:src="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_subtitle"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:text="Kalender"
-        android:textSize="50sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@id/tv_subtitle"/>
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="50sp" />
 
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/et_email"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textAlignment="center"
+        android:layout_marginBottom="44dp"
         android:text="Planning App"
-        android:textSize="17sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@id/et_email"/>
+        android:textSize="17sp" />
 
     <EditText
         android:id="@+id/et_email"
@@ -51,14 +67,15 @@
         android:inputType="textPassword"
         android:padding="15dp"
         android:textSize="15sp" />
+
     <TextView
         android:id="@+id/tv_recover"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
-        android:textStyle="bold"
         android:clickable="true"
-        android:text="        Forgot your password?"/>
+        android:text="        Forgot your password?"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_login"
