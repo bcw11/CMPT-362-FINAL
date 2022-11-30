@@ -13,7 +13,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -56,14 +55,23 @@ class MainActivity : AppCompatActivity() {
         // set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-        if(sharedPref.getString("id", "") != "")
+        if(sharedPref.getString("id", "") != "") {
             navGraph.setStartDestination(R.id.nav_kanban)
+            binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
+        }
        navController.graph = navGraph
 
+        // fixed navigation menu bug
         navView.setNavigationItemSelectedListener{
             when(it.itemId){
-                R.id.nav_kanban -> navController.navigate(R.id.nav_kanban)
-                R.id.nav_calendar -> navController.navigate(R.id.nav_calendar)
+                R.id.nav_calendar -> {
+                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_kanban))
+                    navController.navigate(R.id.nav_calendar)
+                }
+                R.id.nav_kanban -> {
+                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
+                    navController.navigate(R.id.nav_kanban)
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             false
@@ -77,11 +85,11 @@ class MainActivity : AppCompatActivity() {
 
             // finding current fragment
             if(currentLabel == CalendarFragment().label){
-                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
                 navController.navigate(R.id.nav_kanban)
             }
             if(currentLabel == KanbanFragment().label){
-                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
+                binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_kanban))
                 navController.navigate(R.id.nav_calendar)
             }
         }

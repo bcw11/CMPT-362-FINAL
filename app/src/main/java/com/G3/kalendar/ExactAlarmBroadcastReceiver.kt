@@ -26,8 +26,8 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver() {
             .setSilent(false)
             .setContentText("Time for $storyName!")
             .setSmallIcon(R.drawable.ic_menu_camera)
-            .addAction(R.drawable.ic_menu_gallery, "Start", testPendingIntent)
-            .addAction(R.drawable.ic_menu_gallery, "Cancel", testPendingIntent)
+            .addAction(R.drawable.ic_menu_kanban, "Start", testPendingIntent)
+            .addAction(R.drawable.ic_menu_kanban, "Cancel", testPendingIntent)
 
         val notification = notificationBuilder.build()
 
