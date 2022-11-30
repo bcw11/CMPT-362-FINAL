@@ -1,10 +1,9 @@
-package com.G3.kalendar.ui.kanban
+package com.G3.kalendar
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.G3.kalendar.ExactAlarmBroadcastReceiver
 
 class AlarmManagement(val context: Context) {
 
