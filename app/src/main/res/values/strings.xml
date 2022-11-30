@@ -12,6 +12,8 @@
     <string name="menu_kanban">Kanban</string>
     <string name="menu_calendar">Calendar</string>
 
+    <string name="menu_stats">Stats</string>
+
     <string name="save">SAVE</string>
     <string name="cancel">CANCEL</string>
 

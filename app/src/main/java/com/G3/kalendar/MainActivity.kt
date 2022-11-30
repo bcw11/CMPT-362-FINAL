@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
                     binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
                     navController.navigate(R.id.nav_kanban)
                 }
+                R.id.nav_stats->{
+                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_camera))
+                    navController.navigate(R.id.nav_stats)
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             false
