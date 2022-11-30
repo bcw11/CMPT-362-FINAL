@@ -74,7 +74,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         val c = Calendar.getInstance()
 
         // setting day to first of the week
-        val monthDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 1
+        val monthDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 2
         c.add(Calendar.DAY_OF_YEAR, -monthDay)
         calendar.get(Calendar.DAY_OF_MONTH)
 
@@ -136,19 +136,20 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
 
-        val c = Calendar.getInstance().timeInMillis
-        val g:List<Long> = listOf(c)
-        val story = Story("","","","CMPT 413",0L, Globals.TO_DO_STATUS,g,0)
-        val stories = listOf(story)
-        weekView.populateStories(stories)
+        if(epic != null)
+            viewModel.getAllByEpicId(epic.id)
+        else
+            weekView.populateStories(viewModel.stories.value)
 
-//        if(epic != null)
-//            viewModel.getAllByEpicId(epic.id)
-//        else
-//            weekView.populateStories(viewModel.stories.value)
-//
-//        viewModel.stories.observe(requireActivity()){
-//            weekView.populateStories(it)
-//        }
+        viewModel.stories.observe(requireActivity()){
+            weekView.populateStories(it)
+        }
+
+
+//        val c = Calendar.getInstance().timeInMillis
+//        val g:List<Long> = listOf(c)
+//        val story = Story("","","","CMPT 413",0L, Globals.TO_DO_STATUS,g,0)
+//        val stories = listOf(story)
+//        weekView.populateStories(stories)
     }
 }

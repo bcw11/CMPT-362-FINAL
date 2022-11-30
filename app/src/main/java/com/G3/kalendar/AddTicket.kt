@@ -52,6 +52,8 @@ class AddTicket : AppCompatActivity()  {
         val status = SpinnerStatus.selectedItem.toString()
         entry.status = status
 
+
+
         val factory = DatabaseViewModelFactory(userID)
         val viewModel = ViewModelProvider(
             this,
