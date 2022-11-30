@@ -53,10 +53,11 @@ class AddTicket : AppCompatActivity()  {
         val status = SpinnerStatus.selectedItem.toString()
         entry.status = status
 
-        val current_time = arrayListOf<Long>(Calendar.getInstance().timeInMillis)
+        val current_time = arrayListOf<Long>(Calendar.getInstance().timeInMillis + 7000)
         entry.calendarTimes = current_time
 
-
+        val alarmManagement = AlarmManagement(this)
+        alarmManagement.scheduleAlarm(current_time[0], 123, entry.name)
 
         val factory = DatabaseViewModelFactory(userID)
         val viewModel = ViewModelProvider(
