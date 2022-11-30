@@ -2,6 +2,7 @@ package com.G3.kalendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceFragment
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,7 +20,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.G3.kalendar.databinding.ActivityMainBinding
 import com.G3.kalendar.ui.calendar.CalendarFragment
 import com.G3.kalendar.ui.home.LoginActivity
+import com.G3.kalendar.ui.home.LoginFragment
 import com.G3.kalendar.ui.kanban.KanbanFragment
+import com.G3.kalendar.ui.stats.StatsFragment
 import com.google.android.material.navigation.NavigationView
 
 
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar, R.id.nav_stats), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
@@ -74,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_gallery))
                 navController.navigate(R.id.nav_calendar)
             }
+
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
 

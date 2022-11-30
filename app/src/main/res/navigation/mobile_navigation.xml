@@ -18,6 +18,12 @@
         android:name="com.G3.kalendar.ui.calendar.CalendarFragment"
         android:label="@string/menu_calendar"
         tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/nav_stats"
+        android:name="com.G3.kalendar.ui.stats.StatsFragment"
+        android:label="@string/menu_stats"
+        tools:layout="@layout/fragment_stats" />
 </navigation>
 
 
