@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.G3.kalendar.ui.kanban.AlarmManagement
 
 class ExactAlarmBroadcastReceiver : BroadcastReceiver() {
     private val CHANNEL_ID = "Kalendar Notifications"

@@ -5,6 +5,7 @@ import android.util.Log
 import com.G3.kalendar.Globals
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.parcelize.Parcelize
+import java.lang.reflect.Array.getInt
 
 @Parcelize
 data class Story(
@@ -26,9 +27,9 @@ data class Story(
                 val dueDate = getLong(Globals.DUE_DATE_FIELD)!!
                 val status = getString(Globals.STATUS_FIELD)!!
                 val calendarTimes = data!![Globals.CALENDAR_TIMES_FIELD]!! as List<Long>
-                var color = getString(Globals.COLOR_FIELD)!!
+                val color = getLong(Globals.COLOR_FIELD)!!.toInt()
 
-                Story(id, userId, epicId, name, dueDate, status, calendarTimes)
+                Story(id, userId, epicId, name, dueDate, status, calendarTimes, color)
             } catch (e: Exception) {
                 Log.e(TAG, "Error converting story entry", e)
                 null
