@@ -3,6 +3,7 @@ package com.G3.kalendar.ui.calendar
 import android.content.Context.MODE_PRIVATE
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,8 +68,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
             // current day's colour to BLUE
             if(c.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)){
-                dayOfMonthTV.setTextColor(Color.BLUE)
-                dayOfWeekTV.setTextColor(Color.BLUE)
+                dayOfMonthTV.setTextColor(Color.RED)
+                dayOfMonthTV.setTypeface(null, Typeface.BOLD)
+                dayOfWeekTV.setTextColor(Color.RED)
+                dayOfWeekTV.setTypeface(null, Typeface.BOLD)
             }
 
             // getting next day
@@ -95,41 +99,44 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
 // Child fragment that will be dynamically embedded in the parent
 class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
+
+    // week view
     private lateinit var weekView:WeekView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // getting user's story database
+        val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
+        val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+        var stories = viewModel.stories.value
+
+        // test
+        val time1:List<Long> = listOf(Calendar.getInstance().timeInMillis)
+        val story1 = Story("","","","CMPT 362",0L,"",time1)
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_WEEK,2)
+        val time2:List<Long> = listOf(calendar.timeInMillis)
+        val story2 = Story("","","","CMPT 413",0L,"",time2)
+        stories = listOf(story1,story2)
+
+        // initializing week view
         weekView = view.findViewById(R.id.week_view)
+        weekView.populateStories(stories)
 
-        val weekView: WeekView = view.findViewById(R.id.week_view)
-        val columnWidth = (weekView.rootView.width/8)
-        val rowLength = 3*(weekView.rootView.height/24)
-        println("bebug $columnWidth $rowLength")
-        val rect = Rect(columnWidth,rowLength,columnWidth,rowLength)
-//        weekView.addStory(rect)
+        // test
+        calendar.set(Calendar.DAY_OF_WEEK,1)
+        val time3:List<Long> = listOf(calendar.timeInMillis)
+        val story3 = Story("","","","CMPT A",0L,"",time3)
 
-        var button:Button = Button(context)
-        button.layoutParams = LinearLayout.LayoutParams(
-            columnWidth.toInt(),
-            rowLength.toInt())
-        button.text = "YOYOYO"
-        button.setOnClickListener{println("bebug YOYOYO")}
-        button.x = columnWidth.toFloat()
-        button.y = rowLength.toFloat()
+        calendar.set(Calendar.DAY_OF_WEEK,0)
+        val time4:List<Long> = listOf(calendar.timeInMillis)
+        val story4 = Story("","","","CMPT B",0L,"",time4)
+        val stories2 = listOf(story3,story4)
+//        weekView.populateStories(stories2)
 
-        weekView.addView(button)
-
-        button = Button(context)
-        button.layoutParams = LinearLayout.LayoutParams(
-            columnWidth.toInt(),
-            rowLength.toInt())
-        button.text = "BABABA"
-        button.setOnClickListener{println("bebug BABABA")}
-        button.x = 2*columnWidth.toFloat()
-        button.y = rowLength.toFloat()
-//        button2.setBackgroundColor(Color.CYAN)
-        weekView.addView(button)
     }
 
 

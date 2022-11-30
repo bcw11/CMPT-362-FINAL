@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
+import com.G3.kalendar.database.story.Story
 import javax.annotation.RegEx
 
 class StoryView @JvmOverloads constructor(
@@ -36,11 +37,6 @@ class StoryView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
 //        super.onSizeChanged(w, h, oldw, oldh)
-    }
-
-    fun setRect(rect:Rect){
-        story = RectF(rect)
-        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {

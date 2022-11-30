@@ -48,34 +48,23 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_kanban, R.id.nav_calendar), drawerLayout)
-        //R.id.nav_home,
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         //set start destination
         navController = this.findNavController(R.id.nav_host_fragment_content_main)
         var navGraph: NavGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-//        println("DEBUG: sharedPref id is " +sharedPref.getString("id", ""))
         if(sharedPref.getString("id", "") != ""){
             navGraph.setStartDestination(R.id.nav_kanban)
         }
-//        else{
-//            navGraph.setStartDestination(R.id.nav_home)
-//        }
        navController.graph = navGraph
-
-        // getting current fragment label
-        var currentLabel = navController.currentDestination?.label
-
-        // setting button to be visible
-//        if(currentLabel == HomeFragment().label){ binding.appBarMain.fab.visibility = View.GONE }
-//        else{ binding.appBarMain.fab.visibility = View.VISIBLE }
 
         // adapted from https://stackoverflow.com/questions/67147901/kotlin-opening-new-fragment-in-nav-drawer-example
         // switching icons https://stackoverflow.com/questions/15052669/android-change-button-icon-when-clicked
+
         // switches between calendar and kanban fragments
         binding.appBarMain.fab.setOnClickListener {
-            currentLabel = navController.currentDestination?.label
+            var currentLabel = navController.currentDestination?.label
             // finding current fragment
             if(currentLabel == CalendarFragment().label){
                 binding.appBarMain.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_slideshow))
@@ -107,7 +96,6 @@ class MainActivity : AppCompatActivity() {
                 val navigationView = this.findViewById<View>(R.id.nav_view) as NavigationView
                 navigationView.menu.getItem(0).isChecked = true
                 navController = this.findNavController(R.id.nav_host_fragment_content_main)
-//              navController.navigate(R.id.nav_home)
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

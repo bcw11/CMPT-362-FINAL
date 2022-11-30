@@ -33,9 +33,6 @@ class LoginActivity : AppCompatActivity() {
             factory.userViewModelFactory
         ).get(UserViewModel::class.java)
 
-        val loginViewModel =
-            ViewModelProvider(this).get(LoginViewModel::class.java)
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val root: View = binding.root
