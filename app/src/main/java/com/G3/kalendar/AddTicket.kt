@@ -57,7 +57,7 @@ class AddTicket : AppCompatActivity()  {
         entry.calendarTimes = current_time
 
         val alarmManagement = AlarmManagement(this)
-        alarmManagement.scheduleAlarm(current_time[0], 123, entry.name)
+        alarmManagement.scheduleAlarm(current_time[0], current_time[0].toInt(), entry.name)
 
         val factory = DatabaseViewModelFactory(userID)
         val viewModel = ViewModelProvider(
