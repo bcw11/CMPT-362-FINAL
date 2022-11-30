@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryViewModel
+import java.util.Calendar
 
 
 class AddTicket : AppCompatActivity()  {
@@ -51,6 +52,9 @@ class AddTicket : AppCompatActivity()  {
 
         val status = SpinnerStatus.selectedItem.toString()
         entry.status = status
+
+        val current_time = arrayListOf<Long>(Calendar.getInstance().timeInMillis)
+        entry.calendarTimes = current_time
 
 
 

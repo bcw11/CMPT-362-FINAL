@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/addTicket_layout"
+    android:id="@+id/viewTicket_layout"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add a Story"
+        android:text="Story"
         android:textSize="30sp"
         android:textAlignment="center"/>
 
@@ -20,43 +20,25 @@
         android:layout_height="wrap_content"
         android:text="Story Name" />
 
-    <EditText
-        android:id="@+id/ETstoryName"
+    <TextView
+        android:id="@+id/TVstoryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the story name"
-        android:inputType="text"
-        android:textSize="15sp"/>
+        android:text="Text" />
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Epic Name" />
 
-<!--    <Spinner-->
-<!--        android:id="@+id/epicSpinner"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:spinnerMode="dropdown" />-->
-
-    <EditText
-        android:id="@+id/ETepicName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the epic name"
-        android:inputType="text"
-        android:textSize="15sp"/>
 
     <TextView
+        android:id="@+id/TVepicName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Status" />
+        android:text="Text" />
 
-    <Spinner
-        android:id="@+id/statusSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown" />
 
 
     <LinearLayout
@@ -68,18 +50,18 @@
         android:layout_weight="1"
         android:gravity="center|bottom">
 
-        <Button
-            android:id="@+id/save_button_start"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onSaveClicked"
-            android:text="@string/save"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+<!--        <Button-->
+<!--            android:id="@+id/save_button_start"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:onClick="onSaveClicked"-->
+<!--            android:text="@string/save"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginRight="10dp" />-->
 
         <Button
-            android:id="@+id/cancel_button_start"
+            android:id="@+id/cancel_button_viewTicket"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

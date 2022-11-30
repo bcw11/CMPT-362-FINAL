@@ -99,7 +99,7 @@ class WeekView @JvmOverloads constructor(
                 // getting story time
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = time
-                var dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) + 2
+                var dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
                 if(dayOfWeek > 7){ dayOfWeek -= 7 }
                 var hour = calendar.get(Calendar.HOUR_OF_DAY).toFloat()
                 val min = calendar.get(Calendar.MINUTE).toFloat()/60
