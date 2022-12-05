@@ -19,7 +19,8 @@ class StoryDao(private val db: FirebaseFirestore) {
             Globals.DUE_DATE_FIELD to story.dueDate,
             Globals.STATUS_FIELD to story.status,
             Globals.CALENDAR_TIMES_FIELD to story.calendarTimes,
-            Globals.COLOR_FIELD to story.color
+            Globals.COLOR_FIELD to story.color,
+            Globals.TIME_SPENT_FIELD to story.timeSpent
         )
 
         db.collection(Globals.STORY_TABLE_NAME)
@@ -35,7 +36,8 @@ class StoryDao(private val db: FirebaseFirestore) {
             Globals.DUE_DATE_FIELD to story.dueDate,
             Globals.STATUS_FIELD to story.status,
             Globals.CALENDAR_TIMES_FIELD to story.calendarTimes,
-            Globals.COLOR_FIELD to story.color
+            Globals.COLOR_FIELD to story.color,
+            Globals.TIME_SPENT_FIELD to story.timeSpent
         )
 
         db.collection(Globals.STORY_TABLE_NAME)
@@ -140,7 +142,9 @@ class StoryDao(private val db: FirebaseFirestore) {
                     Globals.NAME_FIELD to story.name,
                     Globals.DUE_DATE_FIELD to story.dueDate,
                     Globals.STATUS_FIELD to story.status,
-                    Globals.CALENDAR_TIMES_FIELD to story.calendarTimes
+                    Globals.CALENDAR_TIMES_FIELD to story.calendarTimes,
+                    Globals.COLOR_FIELD to story.color,
+                    Globals.TIME_SPENT_FIELD to story.timeSpent
                 )
             ).await()
     }

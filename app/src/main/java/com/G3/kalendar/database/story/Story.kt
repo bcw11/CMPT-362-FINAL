@@ -16,7 +16,8 @@ data class Story(
     var dueDate: Long = 0L,
     var status: String = "",
     var calendarTimes: List<Long> = ArrayList(),
-    var color: Int = 0
+    var color: Int = 0,
+    var timeSpent: Long = 0L
 ) : Parcelable {
     companion object {
         fun DocumentSnapshot.toStory(): Story? {
@@ -28,8 +29,9 @@ data class Story(
                 val status = getString(Globals.STATUS_FIELD)!!
                 val calendarTimes = data!![Globals.CALENDAR_TIMES_FIELD]!! as List<Long>
                 val color = getLong(Globals.COLOR_FIELD)!!.toInt()
+                val timeSpent = getLong(Globals.TIME_SPENT_FIELD)!!
 
-                Story(id, userId, epicId, name, dueDate, status, calendarTimes, color)
+                Story(id, userId, epicId, name, dueDate, status, calendarTimes, color, timeSpent)
             } catch (e: Exception) {
                 Log.e(TAG, "Error converting story entry", e)
                 null

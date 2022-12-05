@@ -25,4 +25,5 @@ object Globals {
     val PASSWORD_FIELD = "password"
     val SALT_FIELD = "salt"
     val COLOR_FIELD = "color"
+    val TIME_SPENT_FIELD = "timeSpent"
 }
