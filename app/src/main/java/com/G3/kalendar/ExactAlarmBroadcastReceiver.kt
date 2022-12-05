@@ -53,6 +53,7 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
         val sharedPref = context.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
         val id = sharedPref.getString("id", "")!!
         val storyId = intent.getStringExtra(AlarmManagement.STORY_ID)
+        val time = intent.getIntExtra(AlarmManagement.TIME, 0)
 
         val db = Firebase.firestore
         val storyDao = StoryDao(db)
@@ -79,7 +80,7 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
                         .addAction(
                             R.drawable.ic_menu_kanban,
                             "Reschedule",
-                            reschedulePendingIntent(context, story)
+                            reschedulePendingIntent(context, story, time)
                         )
 
                     val notification = notificationBuilder.build()
@@ -89,10 +90,11 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
         }
     }
 
-    private fun reschedulePendingIntent(context: Context, story: Story): PendingIntent {
+    private fun reschedulePendingIntent(context: Context, story: Story, time: Int): PendingIntent {
         val bundle = Bundle()
         bundle.putString(RescheduleBroadcastReceiver.STORY_ID, story.id)
         bundle.putLongArray(RescheduleBroadcastReceiver.TIME_ARRAY, generateLongArray(story))
+        bundle.putLong(RescheduleBroadcastReceiver.TIME, time.toLong())
         val intent = Intent(context, RescheduleBroadcastReceiver::class.java)
         intent.putExtras(bundle)
         return PendingIntent.getBroadcast(context, REQUEST_CODE++, intent, PendingIntent.FLAG_IMMUTABLE)

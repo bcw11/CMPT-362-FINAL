@@ -9,6 +9,7 @@ class AlarmManagement(val context: Context) {
 
     companion object {
         const val STORY_ID = "story_id"
+        const val TIME = "time"
     }
 
     fun scheduleAlarm(time: Long, storyId: String) {
@@ -26,6 +27,7 @@ class AlarmManagement(val context: Context) {
     private fun createPendingIntent(requestCode: Int, storyId: String): PendingIntent {
         val intent = Intent(context, ExactAlarmBroadcastReceiver::class.java).apply {
             putExtra(STORY_ID, storyId)
+            putExtra(TIME, requestCode)
         }
         return PendingIntent.getBroadcast(
             context,
