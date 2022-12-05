@@ -55,7 +55,7 @@ class AddTicket : AppCompatActivity() {
         entry.status = status
 
         val current_time = arrayListOf<Long>(Calendar.getInstance().timeInMillis + 7000)
-        current_time.add(Calendar.getInstance().timeInMillis + 7000 * 3)
+        //current_time.add(Calendar.getInstance().timeInMillis + 7000 * 3)
         entry.calendarTimes = current_time
 
         val factory = DatabaseViewModelFactory(userID)
