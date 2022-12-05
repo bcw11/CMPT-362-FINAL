@@ -58,6 +58,7 @@
             android:label="string/app_name" />
 
         <receiver android:name=".ExactAlarmBroadcastReceiver" />
+        <receiver android:name=".RescheduleBroadcastReceiver" />
     </application>
 
 

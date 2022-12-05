@@ -14,12 +14,12 @@ import com.G3.kalendar.database.story.StoryViewModel
 import java.util.Calendar
 
 
-class AddTicket : AppCompatActivity()  {
-    private lateinit var ETstoryName : EditText
-    private lateinit var ETepicName : EditText
+class AddTicket : AppCompatActivity() {
+    private lateinit var ETstoryName: EditText
+    private lateinit var ETepicName: EditText
 
-    private lateinit var SpinnerStatus : Spinner
-    private lateinit var SpinnerStatus_adapter  : ArrayAdapter<String>
+    private lateinit var SpinnerStatus: Spinner
+    private lateinit var SpinnerStatus_adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +31,14 @@ class AddTicket : AppCompatActivity()  {
 
         val spinnerInput = resources.getStringArray(R.array.statusList)
         SpinnerStatus = findViewById(R.id.statusSpinner)
-        SpinnerStatus_adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerInput)
+        SpinnerStatus_adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerInput)
         SpinnerStatus.adapter = SpinnerStatus_adapter
 
 
     }
 
-    fun onSaveClicked(view: View){
+    fun onSaveClicked(view: View) {
         val entry = Story()
 
         val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
@@ -54,10 +55,8 @@ class AddTicket : AppCompatActivity()  {
         entry.status = status
 
         val current_time = arrayListOf<Long>(Calendar.getInstance().timeInMillis + 7000)
+        current_time.add(Calendar.getInstance().timeInMillis + 7000 * 3)
         entry.calendarTimes = current_time
-
-        val alarmManagement = AlarmManagement(this)
-        alarmManagement.scheduleAlarm(current_time[0], current_time[0].toInt(), entry.name)
 
         val factory = DatabaseViewModelFactory(userID)
         val viewModel = ViewModelProvider(
@@ -66,12 +65,24 @@ class AddTicket : AppCompatActivity()  {
         ).get(StoryViewModel::class.java)
 
         viewModel.insert(entry)
+
+        val alarmManagement = AlarmManagement(this)
+        viewModel.stories.observe(this) {
+            for (story in it) {
+                if (story.name == entry.name && story.userId == entry.userId) {
+                    for (time in story.calendarTimes) {
+                        alarmManagement.scheduleAlarm(time, story.id)
+                    }
+                }
+            }
+        }
+
         val refresh = Intent(this, MainActivity::class.java)
         startActivity(refresh)
         finish()
     }
 
-    fun onCancelClicked(view: View){
+    fun onCancelClicked(view: View) {
         this.onBackPressed()
     }
 
