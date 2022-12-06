@@ -55,7 +55,6 @@ class TimerBroadcastReceiver : BroadcastReceiver() {
         counter = 0
         storyId = intent.getStringExtra(Globals.BROADCAST_STORY_ID).toString()
         countdown = intent.getIntExtra(COUNTDOWN, Globals.TWENTYFIVE_MINS_TO_SECS)
-        println("Debug: in timer, countdown = $countdown, and storyId = ${storyId}")
 
         notificationManager =
             context.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
