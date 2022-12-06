@@ -57,8 +57,10 @@
             android:exported="true"
             android:label="string/app_name" />
 
-        <receiver android:name=".ExactAlarmBroadcastReceiver" />
-        <receiver android:name=".RescheduleBroadcastReceiver" />
+        <receiver android:name=".broadcasts.ExactAlarmBroadcastReceiver" />
+        <receiver android:name=".broadcasts.RescheduleBroadcastReceiver" />
+        <receiver android:name=".broadcasts.TimerBroadcastReceiver" />
+        <receiver android:name=".broadcasts.FinishBroadcastReceiver" />
     </application>
 
 

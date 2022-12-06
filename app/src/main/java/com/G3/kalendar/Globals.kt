@@ -26,4 +26,13 @@ object Globals {
     val SALT_FIELD = "salt"
     val COLOR_FIELD = "color"
     val TIME_SPENT_FIELD = "timeSpent"
+
+    // Timers
+    val TWENTYFIVE_MINS_TO_SECS = 25 * 60
+    val FIVE_MINS_TO_SECS = 5 * 60
+
+    // Notifications
+    val CHANNEL_ID = "Kalendar Notifications"
+    val BROADCAST_STORY_ID = "broadcastStoryId"
+
 }

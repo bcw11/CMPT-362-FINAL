@@ -1,4 +1,4 @@
-package com.G3.kalendar
+package com.G3.kalendar.broadcasts
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +12,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.*
+import com.G3.kalendar.*
 import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryDao
 import com.G3.kalendar.database.story.StoryRepository
@@ -23,12 +24,12 @@ import kotlinx.coroutines.launch
 
 
 class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
-    private val CHANNEL_ID = "Kalendar Notifications"
-    private val NOTIFY_ID = 15
     private lateinit var lifecycleRegistry: LifecycleRegistry
 
     companion object {
-        var REQUEST_CODE = 2
+        var RESCHEDULE_REQUEST_CODE = 2
+        var TIMER_REQUEST_CODE = 4
+        const val NOTIFY_ID = 15
     }
 
     override fun getLifecycle(): Lifecycle {
@@ -43,7 +44,7 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
             context.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT > 26) {
             val notificationChannel = NotificationChannel(
-                CHANNEL_ID,
+                Globals.CHANNEL_ID,
                 "notification dot",
                 NotificationManager.IMPORTANCE_HIGH
             )
@@ -52,7 +53,7 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
 
         val sharedPref = context.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
         val id = sharedPref.getString("id", "")!!
-        val storyId = intent.getStringExtra(AlarmManagement.STORY_ID)
+        val storyId = intent.getStringExtra(Globals.BROADCAST_STORY_ID).toString()
         val time = intent.getIntExtra(AlarmManagement.TIME, 0)
 
         val db = Firebase.firestore
@@ -64,18 +65,16 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
             for (story in stories) {
                 if (story.id == storyId) {
 
-                    val intent = Intent(context, AddTicket::class.java)
-                    val pendingIntent =
-                        PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-                    val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+                    val notificationBuilder = NotificationCompat.Builder(context,
+                        Globals.CHANNEL_ID
+                    )
                         .setSilent(false)
                         .setContentText("Time to start ${story.name}")
                         .setSmallIcon(R.drawable.ic_menu_calendar)
                         .addAction(
                             R.drawable.ic_menu_kanban,
                             "Start",
-                            pendingIntent
+                            timerPendingIntent(context, story)
                         )
                         .addAction(
                             R.drawable.ic_menu_kanban,
@@ -90,14 +89,32 @@ class ExactAlarmBroadcastReceiver : BroadcastReceiver(), LifecycleOwner {
         }
     }
 
+    private fun timerPendingIntent(context: Context, story: Story): PendingIntent {
+        val intent = Intent(context, TimerBroadcastReceiver::class.java).apply {
+            putExtra(Globals.BROADCAST_STORY_ID, story.id)
+            putExtra(TimerBroadcastReceiver.COUNTDOWN, Globals.TWENTYFIVE_MINS_TO_SECS)
+        }
+        return PendingIntent.getBroadcast(
+            context,
+            TIMER_REQUEST_CODE++,
+            intent,
+            PendingIntent.FLAG_MUTABLE
+        )
+    }
+
     private fun reschedulePendingIntent(context: Context, story: Story, time: Int): PendingIntent {
         val bundle = Bundle()
-        bundle.putString(RescheduleBroadcastReceiver.STORY_ID, story.id)
+        bundle.putString(Globals.BROADCAST_STORY_ID, story.id)
         bundle.putLongArray(RescheduleBroadcastReceiver.TIME_ARRAY, generateLongArray(story))
         bundle.putLong(RescheduleBroadcastReceiver.TIME, time.toLong())
         val intent = Intent(context, RescheduleBroadcastReceiver::class.java)
         intent.putExtras(bundle)
-        return PendingIntent.getBroadcast(context, REQUEST_CODE++, intent, PendingIntent.FLAG_IMMUTABLE)
+        return PendingIntent.getBroadcast(
+            context,
+            RESCHEDULE_REQUEST_CODE++,
+            intent,
+            PendingIntent.FLAG_MUTABLE
+        )
     }
 
     private fun generateLongArray(story: Story): LongArray {
