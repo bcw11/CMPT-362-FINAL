@@ -57,7 +57,17 @@ class RegisterFragment: Fragment() {
 
         _binding!!.btnRegister.setOnClickListener{
             //Can save user info into the database
-            //todo: Need to check if email already exists in the database
+            //check if email already exists in the database
+            viewModel.users.observe(requireActivity()){
+                for(user in it){
+                    if(user.email.lowercase() == _binding!!.etEmail.text.toString().lowercase()){
+                        val toast = Toast.makeText(context, "Password already exists in database", Toast.LENGTH_LONG)
+                        toast.show()
+                    }
+                }
+            }
+
+            //successful registration
             if(_binding!!.etName.text.isNotEmpty() && _binding!!.etEmail.text.isNotEmpty()
                 && _binding!!.etPassword.text.toString() == _binding!!.etRepassword.text.toString()){
 
@@ -76,6 +86,10 @@ class RegisterFragment: Fragment() {
                  }
             else if(_binding!!.etPassword.text.toString() != _binding!!.etRepassword.text.toString()){
                 val toast = Toast.makeText(context, "Passwords do not match!", Toast.LENGTH_LONG)
+                toast.show()
+            }
+            else{
+                val toast = Toast.makeText(context, "Please fill out all the fields", Toast.LENGTH_LONG)
                 toast.show()
             }
 

@@ -21,6 +21,7 @@ import com.G3.kalendar.databinding.ActivityMainBinding
 import com.G3.kalendar.ui.calendar.CalendarFragment
 import com.G3.kalendar.ui.home.LoginActivity
 import com.G3.kalendar.ui.kanban.KanbanFragment
+import com.G3.kalendar.ui.stats.StatsActivity
 import com.google.android.material.navigation.NavigationView
 
 
@@ -72,10 +73,7 @@ class MainActivity : AppCompatActivity() {
                     binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_calendar))
                     navController.navigate(R.id.nav_kanban)
                 }
-                R.id.nav_stats->{
-                    binding.appBarMain.switchFab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_camera))
-                    navController.navigate(R.id.nav_stats)
-                }
+
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             false
@@ -120,6 +118,13 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this,Preference::class.java)
                 startActivity(intent)
             }
+
+            R.id.action_stats->{
+                //intent
+                val intent = Intent(this, StatsActivity::class.java)
+                startActivity(intent)
+            }
+
             R.id.action_logout-> {
                 val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
                 val editor = sharedPref.edit()

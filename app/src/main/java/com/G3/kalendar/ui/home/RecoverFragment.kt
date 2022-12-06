@@ -30,7 +30,7 @@ class RecoverFragment: Fragment() {
         _binding = FragmentRecoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
+        PIN = 0
         _binding!!.btnSendCode.setOnClickListener{
             val toast = Toast.makeText(context, "A PIN has been sent to the email you entered", Toast.LENGTH_LONG)
             toast.show()
@@ -57,7 +57,7 @@ class RecoverFragment: Fragment() {
         _binding!!.btnRecoverAccount.setOnClickListener{
             enteredPIN = _binding!!.etPin.text.toString()
             println("Debug recoverfragment: enteredPIN is" + enteredPIN)
-            if(PIN == null){
+            if(PIN==0){
                 val toast = Toast.makeText(context, "Wrong PIN", Toast.LENGTH_LONG)
                 toast.show()
             }
