@@ -1,25 +1,21 @@
 package com.G3.kalendar.ui.calendar
 
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import com.G3.kalendar.Globals
 import com.G3.kalendar.R
 import com.G3.kalendar.database.DatabaseViewModelFactory
 import com.G3.kalendar.database.epic.Epic
 import com.G3.kalendar.database.epic.EpicViewModel
-import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,9 +32,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private lateinit var monthText: TextView
     private var calendar: Calendar = Calendar.getInstance()
 
+    private lateinit var childFragment: ChildFragment
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        insertNestedFragment()
 
         // setting month
         setMonthText(view)
@@ -46,28 +43,35 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         // setting days of month
         setDaysOfMonth(view)
 
+        // setting child fragment
+        childFragment = ChildFragment()
+
         // getting epic database
         val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         val viewModel = ViewModelProvider(requireActivity(), factory.epicViewModelFactory)[EpicViewModel::class.java]
-        val epics = viewModel.epics.value
 
-        // getting epic names
-        var epicNames:Array<String> = arrayOf()
-        if (epics != null) {
-            for(epic in epics)
+        // getting epic names to put into drop down
+        viewModel.epics.observe(requireActivity()){
+
+            var epicNames:Array<String> = arrayOf("All Epics")
+            for(epic in it)
                 epicNames += epic.title
-        }
 
-        // initializing filter drop down
-        val arrayAdapter = ArrayAdapter(requireContext(),R.layout.filter_item,epicNames)
-        val autoCompleteTV:AutoCompleteTextView = view.findViewById(R.id.auto_compelete_TV)
-        autoCompleteTV.setAdapter(arrayAdapter)
-        autoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-            if(epics != null){
-                ChildFragment().populateStories(epics[i])
+            // initializing filter drop down
+            val arrayAdapter = ArrayAdapter(requireContext(),R.layout.filter_item,epicNames)
+            val autoCompleteTV:AutoCompleteTextView = view.findViewById(R.id.auto_compelete_TV)
+            autoCompleteTV.setAdapter(arrayAdapter)
+            autoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+                if(i == 0)
+                    childFragment.populateStories(null)
+                else if(it != null)
+                    childFragment.populateStories(it[i-1])
+                else { }
             }
         }
+
+        insertNestedFragment()
     }
 
     private fun setDaysOfMonth(view: View) {
@@ -105,21 +109,26 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         monthText.text = "$month"
     }
 
+
     // adapted from https://guides.codepath.com/android/Creating-and-Using-Fragments
     // Embeds the child fragment dynamically
     private fun insertNestedFragment() {
-        val childFragment: Fragment = ChildFragment()
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.child_fragment_container, childFragment).commit()
+        transaction.replace(R.id.child_fragment_container,childFragment).commit()
     }
-
 }
+
 
 // Child fragment that will be dynamically embedded in the parent
 class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
 
     // week view
     private lateinit var weekView:WeekView
+
+    // database
+    private lateinit var sharedPref:SharedPreferences
+    private lateinit var factory:DatabaseViewModelFactory
+    private lateinit var viewModel:StoryViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -131,25 +140,19 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
 
 
     fun populateStories(epic: Epic?){
-        // getting user's story database
-        val sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
-        val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
-        val viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+
+        sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
+        viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
 
         if(epic != null)
             viewModel.getAllByEpicId(epic.id)
-        else
-            weekView.populateStories(viewModel.stories.value)
+        else {
+            viewModel.getAllById()
+        }
 
         viewModel.stories.observe(requireActivity()){
             weekView.populateStories(it)
         }
-
-
-//        val c = Calendar.getInstance().timeInMillis
-//        val g:List<Long> = listOf(c)
-//        val story = Story("","","","CMPT 413",0L, Globals.TO_DO_STATUS,g,0)
-//        val stories = listOf(story)
-//        weekView.populateStories(stories)
     }
 }
