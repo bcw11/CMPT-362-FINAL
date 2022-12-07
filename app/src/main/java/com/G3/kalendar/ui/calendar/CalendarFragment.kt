@@ -78,7 +78,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         val c = Calendar.getInstance()
 
         // setting day to first of the week
-        val monthDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH) - 2
+        val monthDay = c.get(Calendar.DAY_OF_WEEK_IN_MONTH)+1
         c.add(Calendar.DAY_OF_YEAR, -monthDay)
         calendar.get(Calendar.DAY_OF_MONTH)
 
