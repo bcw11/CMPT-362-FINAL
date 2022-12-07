@@ -22,6 +22,8 @@
     <string name="workTimeEnd">SET END WORK TIME</string>
     <string name="workTimeDate">SET DATE</string>
     <string name="changeDueDate">CHANGE DUE DATE</string>
+    <string name="changeWorkTime">CHANGE WORK START TIME</string>
+
 
     <string-array name="statusList">
         <item>To Do</item>
