@@ -53,7 +53,7 @@ Users can choose to add tasks to their Stories in order to break down the projec
 * [Firebase](https://firebase.google.com/)
 
 # App APK
-* [APK](TODO)
+* [APK](https://github.com/bcw11/CMPT-362-FINAL/blob/master/app-debug.apk)
 
 # MVVM Diagram
 ![MVVN Diagram](resources/MVVN_Diagram.png)
