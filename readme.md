@@ -2,13 +2,36 @@
 
 ## Team Members
 * Bryan Wong
-    * TODO
+    * Calendar 
+         * Custom calendar view
+         * Display stories 
+         * Filter epics 
+   * Misc. functionality
+         * Fab 
+         * Adding Epics
+         * Viewing and editing Stories
 * Karanvir Bath
-    * TODO
+    * Backend (Firebase)
+         * Epic database
+         * Story database 
+         * Task database 
+         * User database
+   * Alarm
+         * Schedule and cancelling alarms based on the times in a story
+   * Notification
+         * Alarms trigger notification to be created
+         * Notifications contain story information and timer
 * Divyam Sharma
-    * TODO
+    * Kanban Fragments
+         * Display stories
+         * Adding new stories
 * Jeremy Choy
-    * TODO
+    * Login
+         * Register Account and store details in database
+         * Checks the database to authenticate users logging in.
+         * Recover account via emailed PIN
+    * Stats
+         * Bar chart to show the total time a user has spent on an epic. 
 
 
 ## Project Pitch
