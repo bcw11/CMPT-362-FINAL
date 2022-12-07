@@ -6,9 +6,9 @@
 * Karanvir Bath
     * TODO
 * Divyam Sharma
-    *TODO
+    * TODO
 * Jeremy Choy
-    *TODO
+    * TODO
 
 
 ## Project Pitch
