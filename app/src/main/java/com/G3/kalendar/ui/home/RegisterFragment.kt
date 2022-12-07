@@ -1,6 +1,8 @@
 package com.G3.kalendar.ui.home
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +70,11 @@ class RegisterFragment: Fragment() {
             }
 
             //successful registration
-            if(_binding!!.etName.text.isNotEmpty() && _binding!!.etEmail.text.isNotEmpty()
+            if(_binding!!.etEmail.text.isNotEmpty() && !isValidEmail(_binding!!.etEmail.text.toString())){
+                val toast = Toast.makeText(context, "Email is invalid!", Toast.LENGTH_LONG)
+                toast.show()
+            }
+            else if(_binding!!.etName.text.isNotEmpty() && _binding!!.etEmail.text.isNotEmpty()
                 && _binding!!.etPassword.text.toString() == _binding!!.etRepassword.text.toString()){
 
                 var user = User()
@@ -97,6 +103,10 @@ class RegisterFragment: Fragment() {
 
         return root
 
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     override fun onDestroyView() {

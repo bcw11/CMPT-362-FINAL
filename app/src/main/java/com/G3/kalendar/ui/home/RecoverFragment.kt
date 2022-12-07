@@ -40,6 +40,7 @@ class RecoverFragment: Fragment() {
             val stringPIN = String.format("%06d", PIN)
             var email = _binding!!.etEmail.text.toString()
             println("Debug recoverfragment: PIN is" + PIN.toString())
+            //source:https://chetan-garg36.medium.com/android-send-mails-not-intent-642d2a71d2ee
             Mailer.sendMail(
                 email,
                 "Kalendar - Reset Your Password",
