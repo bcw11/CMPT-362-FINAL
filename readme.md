@@ -2,7 +2,7 @@
 
 ## Team Members
 * Bryan Wong
-    * t
+    * 
 * Karanvir Bath
     * 
 * Divyam Sharma
@@ -30,7 +30,7 @@ Users can choose to add tasks to their Stories in order to break down the projec
 * [Firebase](https://firebase.google.com/)
 
 # App APK
-* [APK]()
+* [APK](TODO)
 
 # Presentation Video
 * [Video]()
