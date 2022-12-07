@@ -62,7 +62,7 @@ Users can choose to add tasks to their Stories in order to break down the projec
 ![Threaded Design Diagram](resources/Threaded_Design_Diagram.png)
 
 # Presentation Video
-* [Video](TODO)
+* [Video](https://www.youtube.com/watch?v=W07j0o5jH7A)
 
 # Project Zip
 * [File](TODO)
