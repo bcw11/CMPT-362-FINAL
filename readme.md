@@ -32,8 +32,11 @@ Users can choose to add tasks to their Stories in order to break down the projec
 # App APK
 * [APK](TODO)
 
-# MVVM slides
-* [slides](TODO)
+# MVVM Diagram
+* ![MVVN Diagram](resources/MVVN_Diagram.png)
+
+# Threaded Design Diagram
+* ![Threaded Design Diagram](resources/Threaded_Design_Diagram.png)
 
 # Presentation Video
 * [Video](TODO)
