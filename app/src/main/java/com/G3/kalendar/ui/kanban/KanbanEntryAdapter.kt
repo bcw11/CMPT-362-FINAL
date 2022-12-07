@@ -5,7 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.G3.kalendar.R
+import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.epic.EpicViewModel
 import com.G3.kalendar.database.story.Story
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,7 +37,9 @@ class KanbanEntryAdapter(private val context: Context, private var entryList : L
 
         //Get database variables for the listView display
         val storyName = entryList[position].name
-        val epicName = entryList[position].epicId
+
+
+        val epicName = entryList[position].epicName
         val dueDate = getDate(entryList[position].dueDate)
         //val subTaskCount = entryList[position].duration
 

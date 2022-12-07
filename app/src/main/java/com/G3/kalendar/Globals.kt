@@ -15,6 +15,7 @@ object Globals {
     val NAME_FIELD = "name"
     val USER_ID_FIELD = "userId"
     val EPIC_ID_FIELD = "epicId"
+    val EPIC_NAME_FIELD = "epicName"
     val STORY_ID_FIELD = "storyId"
     val TASK_ID_FIELD = "taskId"
     val TITLE_FIELD = "title"

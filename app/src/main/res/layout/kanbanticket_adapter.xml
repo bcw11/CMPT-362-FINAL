@@ -30,18 +30,6 @@
         android:layout_marginRight="40dp"
         />
 
-    <TextView
-        android:id="@+id/subtaskCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/storyName"
-        android:text="subtaskCount"
-        android:gravity="end|top"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:textSize="14sp"
-        android:layout_marginLeft="30dp"
-        />
 
     <TextView
         android:id="@+id/dueDate"

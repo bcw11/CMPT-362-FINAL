@@ -2,6 +2,7 @@ package com.G3.kalendar
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +21,7 @@ import java.util.Calendar
 class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  TimePickerDialog.OnTimeSetListener {
     private lateinit var ETstoryName: EditText
     private lateinit var TVdueDate: TextView
-    private lateinit var TVStartworkTimes: TextView
+    private lateinit var TVStartworkTime: TextView
 
     private lateinit var SpinnerEpic: Spinner
     private lateinit var SpinnerStatus: Spinner
@@ -36,7 +37,11 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
 
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var timePickerDialog: TimePickerDialog
-    private val calendar = Calendar.getInstance()
+    private var calendar_duedate = Calendar.getInstance()
+    private var calendar_startWork = Calendar.getInstance()
+
+    private lateinit var workTimesArray : ArrayList<Calendar>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +50,13 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
 
         ETstoryName = findViewById(R.id.ETstoryName)
         TVdueDate = findViewById(R.id.TVdueDate)
-        TVStartworkTimes = findViewById(R.id.TVstartworkTimes)
+        TVStartworkTime = findViewById(R.id.TVstartworkTimes)
 
         // Set Up
         possibleEpics_epic = ArrayList()
         possibleEpics_title = ArrayList()
+        workTimesArray = ArrayList()
+
         val sharedPref = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
         var factory_epic = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         var viewModel_epic = ViewModelProvider(
@@ -106,13 +113,19 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
         val epicTitleID = possibleEpics_epic.get(epicTitlePos);
         entry.epicId = epicTitleID.id
 
+        entry.epicName = SpinnerEpic.selectedItem.toString()
+
         val status = SpinnerStatus.selectedItem.toString()
         entry.status = status
 
-        val current_time = arrayListOf<Long>(calendar.timeInMillis)
+        val current_time = ArrayList<Long>()
+
+        for (i in workTimesArray) {
+            current_time.add(i.timeInMillis)
+        }
         entry.calendarTimes = current_time
 
-        entry.dueDate = calendar.timeInMillis
+        entry.dueDate = calendar_duedate.timeInMillis
 
         val factory = DatabaseViewModelFactory(userID)
         val viewModel = ViewModelProvider(
@@ -145,24 +158,56 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
     fun setDueDate(view: View) {
         datePickerDialog = DatePickerDialog(
             this,
-            this,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
-        datePickerDialog.show()
+            { view, year, month, day ->
+                calendar_duedate.set(year, month, day)
+                TVdueDate.setText("Due Date: " + parseTime())
+            },
+            calendar_duedate.get(Calendar.YEAR),
+            calendar_duedate.get(Calendar.MONTH),
+            calendar_duedate.get(Calendar.DAY_OF_MONTH)
 
-        TVdueDate.setText("Due Date: " + parseTime())
+        )
+
+        datePickerDialog.show()
     }
 
     fun setWorkTime(view: View) {
+        datePickerDialog = DatePickerDialog(
+            this,
+            { view, year, month, day ->
+                calendar_startWork.set(year, month, day)
+
+                workTimesArray.add(calendar_startWork)
+                var oldDateString : String = ""
+
+                for (i in workTimesArray) {
+                    oldDateString += "Work Time: " + parseDateTime(i) + "\n"
+//                    println("DEBUG: " + i.timeInMillis)
+                }
+                TVStartworkTime.setText(oldDateString)
+
+            },
+            calendar_startWork.get(Calendar.YEAR),
+            calendar_startWork.get(Calendar.MONTH),
+            calendar_startWork.get(Calendar.DAY_OF_MONTH)
+        )
+
         timePickerDialog = TimePickerDialog(
-            this, this,
-            calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true
+            this, {
+                view, hour, minute ->
+                calendar_startWork = Calendar.getInstance()
+                calendar_startWork.set( Calendar.HOUR_OF_DAY, hour )
+                calendar_startWork.set( Calendar.MINUTE, minute )
+                datePickerDialog.show()
+            },
+            calendar_startWork.get(Calendar.HOUR_OF_DAY),
+            calendar_startWork.get(Calendar.MINUTE),
+            true
         )
         timePickerDialog.show()
 
-        TVStartworkTimes.setText("Work Times: " + parseDateTime())
+
+
     }
 
     override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
@@ -174,9 +219,9 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
     }
 
     fun parseTime(): String {
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val year = calendar.get(Calendar.YEAR)
+        val month = calendar_duedate.get(Calendar.MONTH)
+        val day = calendar_duedate.get(Calendar.DAY_OF_MONTH)
+        val year = calendar_duedate.get(Calendar.YEAR)
 
         return "${parseMonth(month + 1)} $day $year"
     }
@@ -199,7 +244,7 @@ class AddTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,  Time
         return ""
     }
 
-    fun parseDateTime(): String {
+    fun parseDateTime(calendar: Calendar): String {
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         var hourStr = "${hour}"
         if (hour < 10) hourStr = "0${hour}"

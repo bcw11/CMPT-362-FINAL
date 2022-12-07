@@ -77,23 +77,10 @@
         android:id="@+id/TVstartworkTimes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Work Times: N/A"
+        android:text="Start Work Day: N/A"
         android:textSize="15dp"/>
 
-    <Button
-        android:id="@+id/setEndWorkTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="setWorkTime"
-        android:text="@string/workTimeEnd"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
-    <TextView
-        android:id="@+id/TVendworkTimes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="End Work Times: N/A"
-        android:textSize="15dp"/>
+
 
 
 

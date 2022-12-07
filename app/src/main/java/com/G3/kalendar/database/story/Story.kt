@@ -12,6 +12,7 @@ data class Story(
     var id: String = "",
     var userId: String = "",
     var epicId: String = "",
+    var epicName: String = "",
     var name: String = "",
     var dueDate: Long = 0L,
     var status: String = "",
@@ -24,6 +25,7 @@ data class Story(
             return try {
                 val userId = getString(Globals.USER_ID_FIELD)!!
                 val epicId = getString(Globals.EPIC_ID_FIELD)!!
+                val epicName = getString(Globals.EPIC_NAME_FIELD)!!
                 val name = getString(Globals.NAME_FIELD)!!
                 val dueDate = getLong(Globals.DUE_DATE_FIELD)!!
                 val status = getString(Globals.STATUS_FIELD)!!
@@ -31,7 +33,7 @@ data class Story(
                 val color = getLong(Globals.COLOR_FIELD)!!.toInt()
                 val timeSpent = getLong(Globals.TIME_SPENT_FIELD)!!
 
-                Story(id, userId, epicId, name, dueDate, status, calendarTimes, color, timeSpent)
+                Story(id, userId, epicId, epicName, name, dueDate, status, calendarTimes, color, timeSpent)
             } catch (e: Exception) {
                 Log.e(TAG, "Error converting story entry", e)
                 null

@@ -15,6 +15,7 @@ class StoryDao(private val db: FirebaseFirestore) {
         val entry = hashMapOf(
             Globals.USER_ID_FIELD to story.userId,
             Globals.EPIC_ID_FIELD to story.epicId,
+            Globals.EPIC_NAME_FIELD to story.epicName,
             Globals.NAME_FIELD to story.name,
             Globals.DUE_DATE_FIELD to story.dueDate,
             Globals.STATUS_FIELD to story.status,
@@ -32,6 +33,7 @@ class StoryDao(private val db: FirebaseFirestore) {
         val storyEntry = hashMapOf(
             Globals.USER_ID_FIELD to story.userId,
             Globals.EPIC_ID_FIELD to story.epicId,
+            Globals.EPIC_NAME_FIELD to story.epicName,
             Globals.NAME_FIELD to story.name,
             Globals.DUE_DATE_FIELD to story.dueDate,
             Globals.STATUS_FIELD to story.status,
@@ -139,6 +141,7 @@ class StoryDao(private val db: FirebaseFirestore) {
             .update(
                 mapOf(
                     Globals.EPIC_ID_FIELD to story.epicId,
+                    Globals.EPIC_NAME_FIELD to story.epicName,
                     Globals.NAME_FIELD to story.name,
                     Globals.DUE_DATE_FIELD to story.dueDate,
                     Globals.STATUS_FIELD to story.status,
