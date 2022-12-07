@@ -1,6 +1,8 @@
 package com.G3.kalendar
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,21 @@ class ViewKanbanTicket : AppCompatActivity() {
 
     // edit text
     private lateinit var storyET : EditText
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.ticket_menu,menu)
+        println("bebug menu1")
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete){
+            storyViewModel.delete(story!!)
+            onBackPressed()
+        }
+        println("bebug menu2")
+        return super.onOptionsItemSelected(item)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

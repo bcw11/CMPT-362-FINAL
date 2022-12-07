@@ -150,4 +150,3 @@ class FixedIndexAxisValueFormatter(private val offset: Float, private val labels
         else labels[index]
     }
 }
-
