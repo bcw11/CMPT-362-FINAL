@@ -97,10 +97,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // adds epics and stories
-        binding.appBarMain.addFab.setOnClickListener {
+        binding.appBarMain.addFabStory.setOnClickListener {
             val intent = Intent(this, AddTicket::class.java)
             startActivity(intent)
+        }
 
+        binding.appBarMain.addFabEpic.setOnClickListener {
+            val intent = Intent(this, AddEpicActivity::class.java)
+            startActivity(intent)
         }
 
 

@@ -17,8 +17,18 @@
 
     <string name="save">SAVE</string>
     <string name="cancel">CANCEL</string>
+    <string name="dueDate">SET DUE DATE</string>
+    <string name="workTimeStart">SET START WORK TIME</string>
+    <string name="workTimeEnd">SET END WORK TIME</string>
+    <string name="workTimeDate">SET DATE</string>
 
     <string-array name="statusList">
+        <item>To Do</item>
+        <item>In Progress</item>
+        <item>Done</item>
+    </string-array>
+
+    <string-array name="color">
         <item>To Do</item>
         <item>In Progress</item>
         <item>Done</item>
