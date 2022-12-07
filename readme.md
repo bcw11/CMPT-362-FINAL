@@ -65,4 +65,4 @@ Users can choose to add tasks to their Stories in order to break down the projec
 * [Video](https://www.youtube.com/watch?v=W07j0o5jH7A)
 
 # Project Zip
-* [File](TODO)
+* [File](https://github.com/bcw11/CMPT-362-FINAL/blob/master/CMPT-362-FINAL-master.zip)
