@@ -21,8 +21,10 @@ import java.util.*
 import java.util.ResourceBundle.getBundle
 import kotlin.collections.ArrayList
 
-class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private val statusArray = arrayOf(Globals.TO_DO_STATUS,Globals.IN_PROGRESS_STATUS,Globals.DONE_STATUS)
+class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
+    private val statusArray =
+        arrayOf(Globals.TO_DO_STATUS, Globals.IN_PROGRESS_STATUS, Globals.DONE_STATUS)
 
     // current story and its epic
     private var story: Story? = null
@@ -37,21 +39,21 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     private lateinit var newworkTimeTV: TextView
 
     // view model
-    private lateinit var storyViewModel:StoryViewModel
+    private lateinit var storyViewModel: StoryViewModel
 
     // edit text
-    private lateinit var storyET : EditText
+    private lateinit var storyET: EditText
 
     //Calendar
     private lateinit var datePickerDialog: DatePickerDialog
     private var calendar = Calendar.getInstance()
 
     // new Work Times
-    private lateinit var workTimesArray : ArrayList<Calendar>
+    private lateinit var oldWorkTimesArray: List<Long>
+    private lateinit var workTimesArray: ArrayList<Calendar>
     private lateinit var timePickerDialog: TimePickerDialog
     private var calendar_duedate = Calendar.getInstance()
     private var calendar_startWork = Calendar.getInstance()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +68,7 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         storyET.setText(story!!.name)
 
         // initializing filter drop down
-        val arrayAdapter = ArrayAdapter(this,R.layout.filter_item,statusArray)
+        val arrayAdapter = ArrayAdapter(this, R.layout.filter_item, statusArray)
         statusSpinner = findViewById(R.id.statusAC)
         statusSpinner.setText(story!!.status)
         statusSpinner.setAdapter(arrayAdapter)
@@ -83,7 +85,8 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         workTimesArray = ArrayList()
         workTimeTV = findViewById(R.id.workTimeTV)
         newworkTimeTV = findViewById(R.id.newworkTimeTV)
-        var oldDateString : String = ""
+        oldWorkTimesArray = story!!.calendarTimes
+        var oldDateString: String = ""
         for (i in story!!.calendarTimes) {
             oldDateString += "Work Time: " + convert2Calendar(i) + "\n"
 //                    println("DEBUG: " + i.timeInMillis)
@@ -93,17 +96,19 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         // initializing epic spinner
         val sharedPref = getSharedPreferences("UserInfo", MODE_PRIVATE)
         val factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
-        var epicViewModel = ViewModelProvider(this, factory.epicViewModelFactory)[EpicViewModel::class.java]
-        storyViewModel = ViewModelProvider(this, factory.storyViewModelFactory)[StoryViewModel::class.java]
-        epicViewModel.epics.observe(this){
-            var epicNames:Array<String> = arrayOf()
-            for(e in it) {
+        var epicViewModel =
+            ViewModelProvider(this, factory.epicViewModelFactory)[EpicViewModel::class.java]
+        storyViewModel =
+            ViewModelProvider(this, factory.storyViewModelFactory)[StoryViewModel::class.java]
+        epicViewModel.epics.observe(this) {
+            var epicNames: Array<String> = arrayOf()
+            for (e in it) {
                 epicNames += e.title
-                if(e.id == story!!.epicId){
+                if (e.id == story!!.epicId) {
                     epic = e
                 }
             }
-            val arrayAdapter = ArrayAdapter(this,R.layout.filter_item,epicNames)
+            val arrayAdapter = ArrayAdapter(this, R.layout.filter_item, epicNames)
             epicSpinner = findViewById(R.id.epicAC)
             epicSpinner.setText(epic!!.title)
             epicSpinner.setAdapter(arrayAdapter)
@@ -111,21 +116,26 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     }
 
-    fun onDeleteClicked(view:View){
+    fun onDeleteClicked(view: View) {
         storyViewModel.delete(story!!)
         onBackPressed()
     }
 
-    fun onSaveClicked(view:View){
+    fun onSaveClicked(view: View) {
         story!!.name = storyET.text.toString()
         story!!.epicId = epic!!.id
         story!!.status = statusSpinner.text.toString()
         story!!.dueDate = calendar.timeInMillis
 
-        if(workTimesArray.size != 0) {
+        if (workTimesArray.size != 0) {
+            val alarmManagement = AlarmManagement(this)
+            for (time in oldWorkTimesArray) {
+                alarmManagement.cancelAlarm(time, story!!.id)
+            }
             val current_time = ArrayList<Long>()
             for (i in workTimesArray) {
                 current_time.add(i.timeInMillis)
+                alarmManagement.scheduleAlarm(i.timeInMillis, story!!.id)
             }
             story!!.calendarTimes = current_time
         }
@@ -135,11 +145,11 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         onBackPressed()
     }
 
-    fun onCancelClicked(view:View){
+    fun onCancelClicked(view: View) {
         onBackPressed()
     }
 
-    fun onChangeDueDateBtn(view: View){
+    fun onChangeDueDateBtn(view: View) {
         datePickerDialog = DatePickerDialog(
             this,
             { view, year, month, day ->
@@ -155,14 +165,14 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         datePickerDialog.show()
     }
 
-    fun onChangeWorkTimeBtn(view: View){
+    fun onChangeWorkTimeBtn(view: View) {
         datePickerDialog = DatePickerDialog(
             this,
             { view, year, month, day ->
                 calendar_startWork.set(year, month, day)
 
                 workTimesArray.add(calendar_startWork)
-                var oldDateString : String = ""
+                var oldDateString: String = ""
 
                 for (i in workTimesArray) {
                     oldDateString += "Work Time: " + parseDateTime(i) + "\n"
@@ -177,11 +187,10 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         )
 
         timePickerDialog = TimePickerDialog(
-            this, {
-                    view, hour, minute ->
+            this, { view, hour, minute ->
                 calendar_startWork = Calendar.getInstance()
-                calendar_startWork.set( Calendar.HOUR_OF_DAY, hour )
-                calendar_startWork.set( Calendar.MINUTE, minute )
+                calendar_startWork.set(Calendar.HOUR_OF_DAY, hour)
+                calendar_startWork.set(Calendar.MINUTE, minute)
                 datePickerDialog.show()
             },
             calendar_startWork.get(Calendar.HOUR_OF_DAY),
@@ -237,9 +246,9 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         return "$hourStr:$minuteStr:$secondStr ${parseMonth(month + 1)} $day $year"
     }
 
-    private fun convert2Calendar(timeinMillis : Long) : String{
-        var formatter  = SimpleDateFormat("dd/MM/yyyy")
-        var dateString : String = formatter.format( Date(timeinMillis))
+    private fun convert2Calendar(timeinMillis: Long): String {
+        var formatter = SimpleDateFormat("dd/MM/yyyy")
+        var dateString: String = formatter.format(Date(timeinMillis))
         return dateString
     }
 
@@ -250,8 +259,6 @@ class ViewKanbanTicket : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
         // do nothing
     }
-
-
 
 
 }
