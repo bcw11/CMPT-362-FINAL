@@ -2,13 +2,13 @@
 
 ## Team Members
 * Bryan Wong
-    * 
+    * TODO
 * Karanvir Bath
-    * 
+    * TODO
 * Divyam Sharma
-    *
+    *TODO
 * Jeremy Choy
-    *
+    *TODO
 
 
 ## Project Pitch
@@ -32,8 +32,11 @@ Users can choose to add tasks to their Stories in order to break down the projec
 # App APK
 * [APK](TODO)
 
+# MVVM slides
+* [slides](TODO)
+
 # Presentation Video
-* [Video]()
+* [Video](TODO)
 
 # Project Zip
-* [File]()
+* [File](TODO)
