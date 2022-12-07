@@ -142,30 +142,26 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
         viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
-//        viewModel.stories.observe(requireActivity()){
-//            refreshStories()
-//        }
     }
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val view = inflater.inflate(R.layout.fragment_calendar_child, container, false)
-//        return view
-//    }
 
-    fun populateStories(epic: Epic?){
+    fun populateStories(epic: Epic?) {
         this.epic = epic
 
         sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
-        viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            factory.storyViewModelFactory
+        )[StoryViewModel::class.java]
 
-        if(epic != null)
+        if (epic != null)
             viewModel.getAllByEpicId(epic.id)
         else {
             viewModel.getAllById()
         }
 
-        viewModel.stories.observe(requireActivity()){
+        viewModel.stories.observe(requireActivity()) {
             weekView.populateStories(it)
         }
     }
@@ -184,5 +180,10 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
         viewModel.stories.observe(requireActivity()){
             weekView.populateStories(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshStories()
     }
 }
