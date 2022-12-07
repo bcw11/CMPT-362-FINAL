@@ -26,9 +26,9 @@ class EpicViewModel(
     }
 
     fun getAllById() {
-        viewModelScope.launch {
-            _epics.value = epicRepository.getAllByUserId(userId)
-        }
+            viewModelScope.launch {
+                _epics.value = epicRepository.getAllByUserId(userId)
+            }
     }
 
     fun delete(epic: Epic) {

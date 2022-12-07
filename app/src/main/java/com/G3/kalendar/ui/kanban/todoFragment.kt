@@ -18,6 +18,7 @@ import com.G3.kalendar.Globals
 import com.G3.kalendar.R
 import com.G3.kalendar.ViewKanbanTicket
 import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.story.Story
 import com.G3.kalendar.database.story.StoryViewModel
 
 
@@ -76,6 +77,7 @@ class todoFragment : Fragment() {
 
             val intent: Intent = Intent(activity, ViewKanbanTicket::class.java)
             intent.putExtra("position", position)
+            intent.putExtra("story_id", arrayAdapter.getItem(position) as Story)
             startActivity(intent)
 
         }
