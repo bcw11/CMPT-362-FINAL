@@ -98,6 +98,7 @@ class StatsActivity: AppCompatActivity() {
                         println("Debug: ${story.epicId} vs ${epic.id}")
                     }
                 }
+
                 barEntries.add(BarEntry(i.toFloat(), totalTimeSpent*0.00027778f))
                 i += 1
             }
@@ -128,7 +129,7 @@ class StatsActivity: AppCompatActivity() {
 
             //remove description label
             _binding!!.myBarChart.description.isEnabled = false
-            //disable zooming
+            //disable zooming.
             _binding!!.myBarChart.setScaleEnabled(false)
             //add animation
             _binding!!.myBarChart.animateY(2500)
