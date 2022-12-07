@@ -35,20 +35,6 @@ class ViewKanbanTicket : AppCompatActivity() {
     private lateinit var storyET : EditText
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.ticket_menu,menu)
-        println("bebug menu1")
-        return true
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.delete){
-            storyViewModel.delete(story!!)
-            onBackPressed()
-        }
-        println("bebug menu2")
-        return super.onOptionsItemSelected(item)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +78,10 @@ class ViewKanbanTicket : AppCompatActivity() {
 
     }
 
+    fun onDeleteClicked(view:View){
+        storyViewModel.delete(story!!)
+        onBackPressed()
+    }
 
     fun onSaveClicked(view:View){
         story!!.name = storyET.text.toString()
