@@ -128,7 +128,8 @@ class StatsActivity: AppCompatActivity() {
 
             //remove description label
             _binding!!.myBarChart.description.isEnabled = false
-
+            //disable zooming
+            _binding!!.myBarChart.setScaleEnabled(false)
             //add animation
             _binding!!.myBarChart.animateY(2500)
             //refresh the chart
