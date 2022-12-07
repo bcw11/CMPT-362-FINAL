@@ -130,16 +130,30 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
     private lateinit var factory:DatabaseViewModelFactory
     private lateinit var viewModel:StoryViewModel
 
+    private var epic:Epic? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // initializing week view
         weekView = view.findViewById(R.id.week_view)
 
         populateStories(null)
+
+        sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
+        viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+//        viewModel.stories.observe(requireActivity()){
+//            refreshStories()
+//        }
     }
 
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        val view = inflater.inflate(R.layout.fragment_calendar_child, container, false)
+//        return view
+//    }
 
     fun populateStories(epic: Epic?){
+        this.epic = epic
 
         sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
         factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
@@ -147,6 +161,22 @@ class ChildFragment : Fragment(R.layout.fragment_calendar_child) {
 
         if(epic != null)
             viewModel.getAllByEpicId(epic.id)
+        else {
+            viewModel.getAllById()
+        }
+
+        viewModel.stories.observe(requireActivity()){
+            weekView.populateStories(it)
+        }
+    }
+
+    fun refreshStories(){
+        sharedPref = requireActivity().getSharedPreferences("UserInfo", MODE_PRIVATE)
+        factory = DatabaseViewModelFactory(sharedPref.getString("id", "")!!)
+        viewModel = ViewModelProvider(requireActivity(), factory.storyViewModelFactory)[StoryViewModel::class.java]
+
+        if(epic != null)
+            viewModel.getAllByEpicId(epic!!.id)
         else {
             viewModel.getAllById()
         }

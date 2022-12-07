@@ -10,6 +10,7 @@ import android.graphics.drawable.shapes.OvalShape
 import android.graphics.drawable.shapes.RectShape
 import android.graphics.drawable.shapes.RoundRectShape
 import android.graphics.drawable.shapes.Shape
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
 import android.view.Gravity
@@ -146,7 +147,10 @@ class WeekView @JvmOverloads constructor(
                 var composite = LayerDrawable(arrayOf(fill,boarder))
                 button.background = composite
 
+                button.isAllCaps = false
+
                 val intent = Intent(context, ViewKanbanTicket::class.java)
+                intent.putExtra("story_id",story)
                 button.setOnClickListener{context.startActivity(intent)}
                 addView(button)
 
