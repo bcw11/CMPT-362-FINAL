@@ -63,7 +63,7 @@ class RegisterFragment: Fragment() {
             viewModel.users.observe(requireActivity()){
                 for(user in it){
                     if(user.email.lowercase() == _binding!!.etEmail.text.toString().lowercase()){
-                        val toast = Toast.makeText(context, "Password already exists in database", Toast.LENGTH_LONG)
+                        val toast = Toast.makeText(context, "Email already exists in database", Toast.LENGTH_LONG)
                         toast.show()
                     }
                 }
