@@ -9,10 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.G3.kalendar.database.epic.EpicDao
-import com.G3.kalendar.database.epic.EpicRepository
-import com.G3.kalendar.database.epic.EpicViewModel
-import com.G3.kalendar.database.epic.EpicViewModelFactory
+import com.G3.kalendar.database.DatabaseViewModelFactory
+import com.G3.kalendar.database.epic.*
 import com.G3.kalendar.database.story.StoryDao
 import com.G3.kalendar.database.story.StoryRepository
 import com.G3.kalendar.database.story.StoryViewModel
@@ -27,6 +25,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import lecho.lib.hellocharts.model.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,63 +50,52 @@ class StatsActivity: AppCompatActivity() {
         val root: View = binding.root
         val sharedPref = this.getSharedPreferences("UserInfo", AppCompatActivity.MODE_PRIVATE)
         val userId = sharedPref.getString("id", "")
-        println("Debug: userId")
+        println("Debug: $userId")
 
 
 
         /////Database setup/////////////////////
-        val db = Firebase.firestore
-        val dao = StoryDao(db)
-        val repository = StoryRepository(dao)
-        val viewModelFactory = StoryViewModelFactory(repository, userId!!)
+        val factory = DatabaseViewModelFactory(userId!!)
         val viewModelStory = ViewModelProvider(
             this,
-            viewModelFactory
+            factory.storyViewModelFactory
         ).get(StoryViewModel::class.java)
 
-        val epicDao = EpicDao(db)
-        val epicRepository = EpicRepository(epicDao)
-        val epicViewModelFactory = EpicViewModelFactory(epicRepository, userId!!)
         val viewModelEpic = ViewModelProvider(
             this,
-            epicViewModelFactory
+            factory.epicViewModelFactory
         ).get(EpicViewModel::class.java)
 
 
         //iterating through the stories get the epic titles
-        val epicTitles = mutableListOf<String>()
+        val epics = ArrayList<Epic>()
+        val xAxisLabel: ArrayList<String> = ArrayList()
+        viewModelEpic.epics.observe(this) {
+            epics.clear()
+            for (epic in it) {
+                epics.add(epic)
+                xAxisLabel.add(epic.title)
+            }
+        }
 
         viewModelStory.stories.observe(this) {
-            for (story in it) {
-                println("Debug: $story")
-                println("Debug: story epicId is " + story.epicId)
-                epicTitles.add(story.epicId)
-            }
 
-            var epicTitlesDistinct = epicTitles.distinct()
-            println("debug: epicTitles is" + epicTitles)
-            println("DEBUG: epictitlesDistinct is " + epicTitlesDistinct)
-
-            val xAxisLabel: ArrayList<String> = ArrayList()
             var i = 1
             var timeSpent = 0.0f
             var totalTimeSpent = 0.0f
-            for(title in epicTitlesDistinct){
-                xAxisLabel.add(title)
-                println("Debug: add title to axis " + title)
-            }
-
             //for every epic, go through each story to determine values for bar chart...
             val barEntries: ArrayList<BarEntry> = ArrayList()
-            for(title in epicTitlesDistinct){
+            for(epic in epics){
                 totalTimeSpent =0.0f
                 for(story in it){
-                    println("Debug: title is " + title)
+                    println("Debug: title is " + epic.title)
                     println("Debug: story.epicId is " + story.epicId)
-                    if(story.epicId == title){
+                    if(story.epicId == epic.id){
                         timeSpent = story.timeSpent.toFloat()
                         totalTimeSpent += timeSpent
-                        println("Debug: ")
+                        println("Debug: match")
+                    } else {
+                        println("Debug: ${story.epicId} vs ${epic.id}")
                     }
                 }
                 barEntries.add(BarEntry(i.toFloat(), totalTimeSpent*0.0027778f))
