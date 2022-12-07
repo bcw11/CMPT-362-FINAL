@@ -6,7 +6,7 @@
          * Custom calendar view
          * Display stories 
          * Filter epics 
-   * Misc. functionality
+    * Misc. functionality
          * Fab 
          * Adding Epics
          * Viewing and editing Stories
@@ -16,9 +16,9 @@
          * Story database 
          * Task database 
          * User database
-   * Alarm
+    * Alarm
          * Schedule and cancelling alarms based on the times in a story
-   * Notification
+    * Notification
          * Alarms trigger notification to be created
          * Notifications contain story information and timer
 * Divyam Sharma
