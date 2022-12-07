@@ -98,7 +98,7 @@ class StatsActivity: AppCompatActivity() {
                         println("Debug: ${story.epicId} vs ${epic.id}")
                     }
                 }
-                barEntries.add(BarEntry(i.toFloat(), totalTimeSpent*0.0027778f))
+                barEntries.add(BarEntry(i.toFloat(), totalTimeSpent*0.00027778f))
                 i += 1
             }
 
